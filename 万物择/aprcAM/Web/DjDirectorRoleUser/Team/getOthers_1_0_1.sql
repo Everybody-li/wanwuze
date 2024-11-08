@@ -1,0 +1,5 @@
+﻿-- ##Title web-服务主管操作管理-服务主管团队管理-购方/供方对接管理
+-- ##Author 卢文彪
+-- ##CreateTime 2023-12-19
+-- ##Describe <p>接口同章节:7.2.6.5</p>
+-- ##CallType[QueryData]

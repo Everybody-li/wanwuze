@@ -1,0 +1,5 @@
+﻿-- ##Title web后台-审批模式-通用配置-供需需求信息管理-信息格式排序-采购/供应需求信息-查询板块名称列表
+-- ##Author 卢文彪
+-- ##CreateTime 2023-07-26
+-- ##Describe 空脚本，前端-->见接口：web后台-审批模式-通用配置-供需需求信息管理-查询列表 Name:aprcAM\Web\ApromMode\Cattype\Mode\getList_1_0_1
+-- ##CallType[QueryData]

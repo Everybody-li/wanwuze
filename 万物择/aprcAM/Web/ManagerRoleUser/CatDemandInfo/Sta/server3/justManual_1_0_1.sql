@@ -1,0 +1,6 @@
+﻿-- 目录:aprcAM\Web\ManagerRoleUser\CatDemandInfo\Sta\server3\justManual_1_0_1
+-- ##Title web-运营经理操作管理-品类采购管理-购方用户成果管理-接口使用说明
+-- ##Author 卢文彪
+-- ##CreateTime 2023-09-15
+-- ##Describe <p>空脚本,品类采购管理-购方用户成果管理-这整块功能使用接口同:web-对接专员操作管理-购方对接管理-购方用户成果管理/供方对接成果管理---对应章节目录序号:7.2.6.5</p>
+-- ##CallType[QueryData]

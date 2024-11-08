@@ -1,0 +1,7 @@
+﻿-- ##Title 插件端-web后台-审批模式-通用配置-供需需求信息管理-克隆品类
+-- ##Author 卢文彪
+-- ##CreateTime 2023-07-28
+-- ##Describe 空脚本，前端：
+-- ##Describe 1、查询采购路径、查询需求场景选择、查询品类名称列表 同交易模式的功能，接口不变
+-- ##Describe 2、克隆动产调用的发布接口更换成：多选，循环调用aprcAM\Web\ApromMode\Cattype\Mode\publish_1_0_1进行发布，百分比前端自行统计，展示格式：N/N (已发布的数量/多选选中的总数量)
+-- ##CallType[QueryData]

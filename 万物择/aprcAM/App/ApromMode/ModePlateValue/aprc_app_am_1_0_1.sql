@@ -1,0 +1,40 @@
+﻿-- ##Title app-管理-审批模式下的品类-融资渠道选择-渠道需求提交-获取供方信息
+-- ##Author lith
+-- ##CreateTime 2023-08-02
+-- ##Describe 表名：
+-- ##CallType[ProxyService]
+
+-- ##input methodName char[36] NOTNULL;方法名称：传"getSuppliers"
+-- ##input categoryGuid char[36] NOTNULL;品类guid
+-- ##input requestGuid char[36] NOTNULL;渠道需求guid
+-- ##input page int[>0] NOTNULL;页数
+-- ##input size int[>0] NOTNULL;分页数量
+-- ##input curUserId char[36] NOTNULL;当前登录用户id
+-- ##input plates.requestGuid char[36] NOTNULL;渠道需求guid
+-- ##input plates.plateGuid char[36] NOTNULL;板块guid
+-- ##input plates.plateCode char[36] NOTNULL;板块code
+-- ##input plates.plateAlias char[36] NOTNULL;板块别名
+-- ##input plates.plateNorder char[36] NOTNULL;板块顺序
+-- ##input plates.plateFieldGuid char[36] NOTNULL;字段名称guid
+-- ##input plates.plateFieldCode char[36] NOTNULL;字段名称code
+-- ##input plates.plateFieldAlias char[36] NOTNULL;字段名称别名
+-- ##input plates.plateFieldNorder char[36] NOTNULL;字段顺序
+-- ##input plates.plateFieldValue string[200] NOTNULL;用户填写的字段名称值
+-- ##input plates.plateFieldOperation char[1] NOTNULL;供/需方操作设置：0-未设置，1-单选框，2-复选框，3-填写文本框，4-图片上传，5-文档上传
+-- ##input plates.plateFieldContentCode string[6] NOTNULL;字段内容固化code
+-- ##input plates.plateFieldRelateFieldGuid string[36] NULL;字段内容关联的字段名称guid
+-- ##input plates.curUserId char[36] NOTNULL;当前登录用户id
+
+-- ##output totalCount int[>0] 1;供方数量
+-- ##output sdPathGuid char[36] ;采购供应路径guid
+-- ##output categoryGuid char[36] 品类guid;品类guid
+-- ##output showNextSumitFlag enum[true,false] false;是否需要展示继续提交页面:0-否,1-是
+-- ##output priceWay1Count int[>=0] 20;非二维码供方型号数量
+-- ##output supplier.supplierGuid char[36] 品类供方guid;品类供方guid
+-- ##output supplier.orgName string[100] 品类供方机构名称(第二列字段名称);品类供方机构名称(第一列字段名称)
+-- ##output supplier.modelGuid char[36] 品类供方型号guid;品类供方型号guid
+-- ##output supplier.modelName string[50] 品类供方型号名称(第三列字段名称);品类供方型号名称(第二列字段名称)
+-- ##output supplier.userId char[36] 品类供方用户id;品类供方用户id
+-- ##output supplier.thirdColumnName string[50] 第三列字段名称;第三列字段名称
+-- ##output supplier.modelPriceWay enum[1,2] 2;品类型号模式：报价方式：1-非二维码，2-二维码
+-- ##output supplier.modelShowQrCodeIconUrl string[100] ARPC\WEB\AM\MODELPRICE\QRCODE\ShowQrCodeIcon.png;型号报价二维码icon图片相对路径

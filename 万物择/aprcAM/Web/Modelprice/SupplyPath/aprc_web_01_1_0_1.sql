@@ -1,0 +1,14 @@
+﻿-- ##Title web后台-审批报价配置管理-xx供应路径-供应审批报价管理-品类审批报价管理-型号报价方式设置-修改
+-- ##Author lith
+-- ##CreateTime 2023-08-04
+-- ##Describecoz_category_supplier_am_model t1,coz_category_am_modelprice t2
+-- ##CallType[ProxyService]
+
+-- ##input method string[100] NOTNULL;固定传web_modelprice_uoipriceway_1_0_1
+-- ##input bizGuid char[36] NOTNULL;业务guid：型号guid
+-- ##input cattypeGuid char[36] NOTNULL;品类类型guid
+-- ##input categoryGuid char[36] NOTNULL;品类名称guid
+-- ##input priceWay enum[1,2] NOTNULL;型号报价方式：1-非二维码，2-二维码
+-- ##input qrcode string[42] NULL;二维码图片：型号报价方式为2时必填，目录：ARPC/WEB/AM/MODELPRICE/QRCODE/{二维码图片名称guid首字母}/；前端传：图片名称guid.+图片名称后缀
+-- ##input qrcodeImgPath char[36] NULL;二维码图片相对路径（型号报价方式为2时必填,前端：传ARPC/WEB/AM/MODELPRICE/QRCODE/{二维码图片名称guid首字母}/）
+-- ##input curUserId char[36] NOTNULL;当前登录用户id

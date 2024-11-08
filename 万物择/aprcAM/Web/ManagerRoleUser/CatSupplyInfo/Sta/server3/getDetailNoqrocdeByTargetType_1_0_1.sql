@@ -1,0 +1,5 @@
+﻿-- ##Title web-运营经理操作管理-品类供应管理-供应渠道成果管理-非二维码-查看详情
+-- ##Author 卢文彪
+-- ##CreateTime 2023-09-15
+-- ##Describe <p>空脚本,使用接口同:web-对接专员操作管理-购方对接管理-购方用户采购管理-管理采购成果管理-非二维码-查看详情(订单验收通过) Name:aprcAM\Web\DjRoleUser\OrderAccept\getDetailNoqrocdeByTargetType_1_0_1</p>
+-- ##CallType[QueryData]

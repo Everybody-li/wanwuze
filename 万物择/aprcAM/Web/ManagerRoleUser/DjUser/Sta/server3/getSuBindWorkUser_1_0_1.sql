@@ -1,0 +1,5 @@
+﻿-- ##Title web-运营经理操作管理-交易对接管理-对接专员信息管理-供方对接管理-供方对接对象管理-列表
+-- ##Author 卢文彪
+-- ##CreateTime 2023-09-15
+-- ##Describe <p>空脚本,前端:使用接口同:web-对接专员操作管理-供方对接管理-供应渠道供应管理-查询列表 Name:aprcAM\Web\DjRoleUser\BindTypeUser\getBindType2Users_1_0_1</p>
+-- ##CallType[QueryData]

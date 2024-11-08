@@ -1,0 +1,5 @@
+﻿-- ##Title web-运营经理操作管理-品类供应管理-供应渠道信息管理-供应机构渠道-查询关联对接专员信息
+-- ##Author 卢文彪
+-- ##CreateTime 2023-09-15
+-- ##Describe <p>空脚本,使用接口同:web-运营专员操作管理-供应机构管理-供应机构信息管理-关联对接专员管理-查询当前关联的对接专员信息 Name:aprcAM\Web\user\orginfo\server3\getBindWorkUser_1_0_1</p>
+-- ##CallType[QueryData]
