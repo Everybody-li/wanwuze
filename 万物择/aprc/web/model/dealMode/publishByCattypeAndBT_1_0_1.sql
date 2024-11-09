@@ -113,7 +113,7 @@ where category_guid = '{cattypeGuid}'
 # 复制所属品类类型的板块字段数据-草稿表
 insert into coz_model_plate_field(guid, cattype_guid, cat_tree_code, category_guid, biz_type, plate_guid,
                                   demand_pf_guid, name, alias, norder, publish_flag, source, content_source, operation,
-                                  placeholder, file_template, del_flag, create_by, create_time, update_by, update_time,
+                                  placeholder, file_template, file_template_display,del_flag, create_by, create_time, update_by, update_time,
                                   temp_guid)
 select UUID()
      , '{cattypeGuid}'
@@ -131,6 +131,7 @@ select UUID()
      , operation
      , placeholder
      , file_template
+     , file_template_display
      , '2'
      , '-1'
      , now()

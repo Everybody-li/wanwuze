@@ -27,21 +27,29 @@ limit 1
 update coz_model_plate
 set publish_time=now()
 ,publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where
 publish_flag='0' and biz_type='1' and category_guid='{categoryGuid}'
 ;
 update coz_model_plate_field
 set publish_time=now()
 ,publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where
 publish_flag='0' and biz_type='1' and category_guid='{categoryGuid}'
 ;
 update coz_model_plate_field_content
 set publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where
 publish_flag='0' and biz_type='1' and category_guid='{categoryGuid}'
 ;
 update coz_category_deal_mode
 set publish_time=now()
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid='{categoryGuid}'
 ;

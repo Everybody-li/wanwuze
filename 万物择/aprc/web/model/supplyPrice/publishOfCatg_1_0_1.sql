@@ -60,9 +60,9 @@ select UUID(),
        cattype_guid,
        now() as publish_time,
        '{curUserId}',
-       create_time,
+       now(),
        '{curUserId}',
-       update_time
+       now()
 from coz_category_supply_price
 where category_guid = '{categoryGuid}'
   and @canPublish = '1'
@@ -72,6 +72,8 @@ limit 1
 update coz_model_plate
 set publish_time=now()
   , publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where publish_flag = '0'
   and biz_type = '2'
   and category_guid = '{categoryGuid}'
@@ -80,6 +82,8 @@ where publish_flag = '0'
 update coz_model_plate_field
 set publish_time=now()
   , publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where publish_flag = '0'
   and biz_type = '2'
   and category_guid = '{categoryGuid}'
@@ -87,6 +91,8 @@ where publish_flag = '0'
 ;
 update coz_model_plate_field_content
 set publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where publish_flag = '0'
   and biz_type = '2'
   and category_guid = '{categoryGuid}'
@@ -94,6 +100,8 @@ where publish_flag = '0'
 ;
 update coz_category_supply_price
 set publish_time=now()
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid = '{categoryGuid}'
   and @canPublish = '1'
 ;
@@ -109,9 +117,9 @@ select guid,
        norder,
        del_flag,
        '{curUserId}',
-       create_time,
+       now(),
        '{curUserId}',
-       update_time
+       now()
 from coz_model_plate
 where del_flag = 0
   and biz_type = '2'
@@ -141,9 +149,9 @@ select guid,
        file_template,
        del_flag,
        '{curUserId}',
-       create_time,
+       now(),
        '{curUserId}',
-       update_time
+       now()
 from coz_model_plate_field
 where del_flag = '0'
   and biz_type = '2'
@@ -164,9 +172,9 @@ select t.guid,
        t.id,
        t.del_flag,
        '{curUserId}',
-       t.create_time,
+       now(),
        '{curUserId}',
-       t.update_time
+       now()
 from coz_model_plate_field_content t
          left join
      coz_model_plate_field t1

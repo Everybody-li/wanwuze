@@ -22,22 +22,32 @@ where category_guid='{categoryGuid}' and biz_type='1'
 ;
 update coz_model_plate_field
 set del_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid='{categoryGuid}' and biz_type='1'
 ;
 update coz_model_plate_field_content
 set del_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid='{categoryGuid}' and biz_type='1'
 ;
 update coz_model_plate_formal
 set del_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid='{categoryGuid}' and biz_type='1'
 ;
 update coz_model_plate_field_formal
 set del_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid='{categoryGuid}' and biz_type='1'
 ;
 update coz_model_plate_field_content_formal
 set del_flag='2'
+  ,update_time = now()
+,update_by = '{curUserId}'
 where category_guid='{categoryGuid}' and biz_type='1'
 ;
 

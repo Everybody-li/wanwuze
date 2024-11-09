@@ -13,6 +13,7 @@ t.plate_field_norder as norder
 ,t.plate_field_content_gc as contentFDCode
 ,t.plate_field_value_remark as bizGuid
 ,t.operation
+
 ,CONCAT('{ChildRows_aprc\\webSuOrg\\supplier\\bill\\plates\\getPlateFieldValues_1_0_1:fieldGuid=''',t.plate_field_formal_guid,'''}') as `values`
 from
 coz_category_supplier_bill  t

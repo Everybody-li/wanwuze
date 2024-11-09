@@ -35,15 +35,21 @@ publish_flag='0' and biz_type='2' and category_guid='{categoryGuid}' and  @canPu
 update coz_model_plate_field
 set publish_time=now()
 ,publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where
 publish_flag='0' and biz_type='2' and category_guid='{categoryGuid}' and  @canPublish='1'
 ;
 update coz_model_plate_field_content
 set publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where
 publish_flag='0' and biz_type='2' and category_guid='{categoryGuid}' and  @canPublish='1'
 ;
 update coz_category_supply_price
 set publish_time=now()
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid='{categoryGuid}' and  @canPublish='1'
 ;

@@ -29,6 +29,8 @@ set price_mode=@priceMode
 ,price_mode_chtime=now()
 ,range_flag='0'
 ,user_price_mode=@priceMode
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid=CAST(@categoryGuid AS char CHARACTER SET utf8) and @flag1='1'
 ;
 update coz_category_deal_rule t
@@ -36,7 +38,9 @@ set publish_flag=2
 ,publish_time=now()
 ,price_mode=@priceMode
 ,serve_fee_flag=@serveFeeFlag
-where guid='{dealRuleGuid}' or 
+,update_time = now()
+,update_by = '{curUserId}'
+where guid='{dealRuleGuid}' or
 (
 not exists(select 1 from coz_category_deal_rule_log where category_guid=t.category_guid) and
 cattype_guid=CAST(@categoryGuid AS char CHARACTER SET utf8) and CAST(@cloneFalg AS char CHARACTER SET utf8)='1'

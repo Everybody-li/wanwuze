@@ -58,9 +58,9 @@ select UUID(),
        cattype_guid,
        now() as publish_time,
        '{curUserId}',
-       create_time,
+       now(),
        '{curUserId}',
-       update_time
+       now()
 from coz_category_supply_price
 where category_guid = '{categoryGuid}'
   and @flag1 = '1'

@@ -85,6 +85,8 @@ limit 1
 update coz_model_plate
 set publish_time=now()
   , publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where publish_flag = '0'
   and biz_type = '1'
   and category_guid = '{categoryGuid}'
@@ -93,6 +95,8 @@ where publish_flag = '0'
 update coz_model_plate_field
 set publish_time=now()
   , publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where publish_flag = '0'
   and biz_type = '1'
   and category_guid = '{categoryGuid}'
@@ -100,6 +104,8 @@ where publish_flag = '0'
 ;
 update coz_model_plate_field_content
 set publish_flag='2'
+,update_time = now()
+,update_by = '{curUserId}'
 where publish_flag = '0'
   and biz_type = '1'
   and category_guid = '{categoryGuid}'
@@ -107,6 +113,8 @@ where publish_flag = '0'
 ;
 update coz_category_deal_mode
 set publish_time=now()
+,update_time = now()
+,update_by = '{curUserId}'
 where category_guid = '{categoryGuid}'
   and @canPublish = '1'
 ;
@@ -136,7 +144,7 @@ where del_flag = 0
 
 insert into coz_model_plate_field_formal(guid, cattype_guid, cat_tree_code, category_guid, biz_type, plate_formal_guid,
                                          demand_pf_formal_guid, name, alias, norder, source, content_source, operation,
-                                         placeholder, file_template, del_flag, create_by, create_time, update_by,
+                                         placeholder, file_template, file_template_display, del_flag, create_by, create_time, update_by,
                                          update_time)
 select guid,
        cattype_guid,
@@ -153,6 +161,7 @@ select guid,
        operation,
        placeholder,
        file_template,
+       file_template_display,
        del_flag,
        '{curUserId}',
        now(),
