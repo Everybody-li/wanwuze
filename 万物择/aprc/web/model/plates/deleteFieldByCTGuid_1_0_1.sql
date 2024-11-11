@@ -11,6 +11,23 @@
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
 
+
+update coz_category_deal_mode
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where '{bizType}' = 1 and category_guid = '{categoryGuid}';
+
+update coz_category_supply_price
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where '{bizType}' = 2  and category_guid = '{categoryGuid}';
+
 update coz_model_plate_field_content
 set publish_flag='0'
 ,del_flag='2'

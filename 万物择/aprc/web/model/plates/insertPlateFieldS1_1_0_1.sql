@@ -13,59 +13,120 @@
 -- ##input plateFieldName string[100] NOTNULL;固化字段名称，必填
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
-insert into coz_model_plate_field (guid,cattype_guid,cat_tree_code,category_guid,biz_type,plate_guid,name,alias,norder,publish_flag,publish_time,source,content_source,operation,placeholder,del_flag,create_by,create_time,update_by,update_time)
-select
-*
+
+update coz_category_deal_mode
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where {bizType} = 1 and category_guid = '{categoryGuid}';
+
+update coz_category_supply_price
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where {bizType}  = 2  and category_guid = '{categoryGuid}';
+
+
+insert into
+    coz_model_plate_field
+    ( guid, cattype_guid, cat_tree_code, category_guid, biz_type, plate_guid, name, alias, norder, publish_flag
+    , publish_time, source, content_source, operation, placeholder, del_flag, create_by, create_time, update_by
+    , update_time )
+select *
 from
-(
-select
-UUID() as guid
-,cattype_guid as cattype_guid
-,'{catTreeCode}' as cat_tree_code
-,'{categoryGuid}' as category_guid
-,'{bizType}' as biz_type
-,'' as plate_guid
-,'{fixedDataCode}' as name
-,'{plateFieldName}' as alias
-,ifnull((select (max(norder)+1) from coz_model_plate_field where cat_tree_code='{catTreeCode}' and del_flag='0' and category_guid='{categoryGuid}' and biz_type='{bizType}'),1) as norder
-,'0' as publish_flag
-,null as publish_time
-,'1' as source
-,'0' as content_source
-,'0' as operation
-,'' as placeholder
-,'0' as del_flag
-,'-1' as create_by
-,now() as create_time
-,'-1' as update_by
-,now()as update_time
-from
-coz_category_info
-where not exists(select 1 from coz_model_plate_field where cat_tree_code='{catTreeCode}' and category_guid='{categoryGuid}' and biz_type='{bizType}' and name='{fixedDataCode}' and alias='{plateFieldName}' and del_flag='0') and guid='{categoryGuid}'
-union all
-select
-UUID() as guid
-,guid as cattype_guid
-,'{catTreeCode}' as cat_tree_code
-,'{categoryGuid}' as category_guid
-,'{bizType}' as biz_type
-,'' as plate_guid
-,'{fixedDataCode}' as name
-,'{plateFieldName}' as alias
-,ifnull((select (max(norder)+1) from coz_model_plate_field where cat_tree_code='{catTreeCode}' and del_flag='0' and category_guid='{categoryGuid}' and biz_type='{bizType}'),1) as norder
-,'0' as publish_flag
-,null as publish_time
-,'1' as source
-,'0' as content_source
-,'0' as operation
-,'' as placeholder
-,0 as del_flag
-,'-1' as create_by
-,now() as create_time
-,'-1' as update_by
-,now()as update_time
-from
-coz_cattype_fixed_data
-where not exists(select 1 from coz_model_plate_field where cat_tree_code='{catTreeCode}' and category_guid='{categoryGuid}' and biz_type='{bizType}' and name='{fixedDataCode}' and alias='{plateFieldName}' and del_flag='0') and guid='{categoryGuid}'
-)t
+    (
+        select
+            UUID()             as guid
+          , cattype_guid       as cattype_guid
+          , '{catTreeCode}'    as cat_tree_code
+          , '{categoryGuid}'   as category_guid
+          , '{bizType}'        as biz_type
+          , ''                 as plate_guid
+          , '{fixedDataCode}'  as name
+          , '{plateFieldName}' as alias
+          , ifnull((
+                       select (max(norder) + 1)
+                       from
+                           coz_model_plate_field
+                       where
+                             cat_tree_code = '{catTreeCode}'
+                         and del_flag = '0'
+                         and category_guid = '{categoryGuid}'
+                         and biz_type = '{bizType}'
+                   ), 1)       as norder
+          , '0'                as publish_flag
+          , null               as publish_time
+          , '1'                as source
+          , '0'                as content_source
+          , '0'                as operation
+          , ''                 as placeholder
+          , '0'                as del_flag
+          , '-1'               as create_by
+          , now()              as create_time
+          , '-1'               as update_by
+          , now()              as update_time
+        from
+            coz_category_info
+        where
+              not exists(select 1
+                         from
+                             coz_model_plate_field
+                         where
+                               cat_tree_code = '{catTreeCode}'
+                           and category_guid = '{categoryGuid}'
+                           and biz_type = '{bizType}'
+                           and name = '{fixedDataCode}'
+                           and alias = '{plateFieldName}'
+                           and del_flag = '0')
+          and guid = '{categoryGuid}'
+        union all
+        select
+            UUID()             as guid
+          , guid               as cattype_guid
+          , '{catTreeCode}'    as cat_tree_code
+          , '{categoryGuid}'   as category_guid
+          , '{bizType}'        as biz_type
+          , ''                 as plate_guid
+          , '{fixedDataCode}'  as name
+          , '{plateFieldName}' as alias
+          , ifnull((
+                       select (max(norder) + 1)
+                       from
+                           coz_model_plate_field
+                       where
+                             cat_tree_code = '{catTreeCode}'
+                         and del_flag = '0'
+                         and category_guid = '{categoryGuid}'
+                         and biz_type = '{bizType}'
+                   ), 1)       as norder
+          , '0'                as publish_flag
+          , null               as publish_time
+          , '1'                as source
+          , '0'                as content_source
+          , '0'                as operation
+          , ''                 as placeholder
+          , 0                  as del_flag
+          , '-1'               as create_by
+          , now()              as create_time
+          , '-1'               as update_by
+          , now()              as update_time
+        from
+            coz_cattype_fixed_data
+        where
+              not exists(select 1
+                         from
+                             coz_model_plate_field
+                         where
+                               cat_tree_code = '{catTreeCode}'
+                           and category_guid = '{categoryGuid}'
+                           and biz_type = '{bizType}'
+                           and name = '{fixedDataCode}'
+                           and alias = '{plateFieldName}'
+                           and del_flag = '0')
+          and guid = '{categoryGuid}'
+    ) t
 ;

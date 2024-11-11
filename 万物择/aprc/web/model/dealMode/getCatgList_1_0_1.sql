@@ -18,50 +18,20 @@
 -- ##output createTime string[19] 创建时间;创建时间（格式：0000-00-00 00:00:00）
 
 select
-    tt.categoryGuid
-  , tt.categoryName
-  , tt.cattypeName
-  , tt.publishFlag
-  , if(tt.publishFlag = '0','',tt.publishTime) as publishTime
+    t1.guid                   as categoryGuid
+  , t1.name                   as categoryName
+  , t1.cattype_name           as cattypeName
+  , t2.publish_flag           as publishFlag
+  , left(t2.publish_time, 19) as publishTime
+  , t1.id
 from
-        (
-select
-    t.*
-  , case
-        when exists(select 1
-                    from coz_model_plate
-                    where t.categoryGuid = category_guid and biz_type = '1' and publish_flag = '0' and del_flag = '0')
-            or exists(select 1
-                      from
-                          coz_model_plate_field
-                      where t.categoryGuid = category_guid and biz_type = '1' and publish_flag = '0' and del_flag = '0')
-            or exists(select 1
-                      from
-                          coz_model_plate_field_content
-                      where t.categoryGuid = category_guid and biz_type = '1' and publish_flag = '0' and del_flag = '0')
-            then '0'
-        else '2' end as publishFlag
-from
-    (
-        select
-            t1.guid                   as categoryGuid
-          , t1.name                   as categoryName
-          , t1.cattype_name           as cattypeName
-          , left(t2.publish_time, 19) as publishTime
-          , t1.id
-        from
-            coz_category_info          t1
-            inner join
-                coz_category_deal_mode t2
-                    on t2.category_guid = t1.guid
-        where t1.del_flag = '0' {dynamic:categoryName[and t1.name like '%{categoryName}%']/dynamic}
-        order by
-            t1.id
-                desc
+    coz_category_info          t1
+    inner join
+        coz_category_deal_mode t2
+            on t2.category_guid = t1.guid
+where t1.del_flag = '0' {dynamic:categoryName[ and t1.name like '%{categoryName}%']/dynamic}
+order by
+    t1.id
+desc
 Limit {compute:[({page}-1)*{size}]/compute},{size}
-    ) t) tt
-   order by
-            tt.id
-                desc
-
 

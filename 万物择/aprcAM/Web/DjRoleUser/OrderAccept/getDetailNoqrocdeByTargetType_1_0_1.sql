@@ -25,39 +25,44 @@
 -- ##output orgName string[50] 机构名称;机构名称
 -- ##output phonenumber string[50] 登录手机号;登录手机号
 
-select 
-t5.guid as orgUserId
-,left(t3.accept_time,19) as operationTime
-,t3.order_no as orderNo
-,t4.category_name as categoryName
-,t4.cattype_name as cattypeName
-,concat('(+86)',t4.user_phone) as demandUserPhone
-,t5.org_ID as orgID
-,left(t5.create_time,19) as createTime
-,(select a.login_sysname from coz_lgcode_fixed_data a where a.guid=t2.lgcode_guid and a.del_flag='0') as supplySystem
-,t5.name as orgName
-,concat('(+86)',t5.phonenumber) as phonenumber
-from 
-coz_server3_cate_dealstatus_statistic t1
-left join
-coz_cattype_sd_path t2
-on t1.sd_path_guid=t2.guid
-inner join
-coz_order t3
-on t1.biz_guid=t3.guid
-inner join
-coz_demand_request t4
-on t3.request_guid=t4.guid
-inner join
-coz_org_info t5
-on t3.supply_user_id=t5.user_id
-where t1.del_flag='0' 
-and t3.del_flag='0' 
-and t4.del_flag='0' 
-and t3.accept_status='1'
-and (('{targetUserType}'='1' and t1.demand_sys_user_guid='{targetUserId}') or ('{targetUserType}'='2' and t1.supply_sys_user_guid='{targetUserId}') or ('{targetUserType}'='3' and t1.category_guid='{targetUserId}'))
-and left(t3.accept_time,7)='{operationMonth}'
-and (t3.order_no like '%{orderNo}%' or '{orderNo}'='')
+select
+    t5.guid                         as orgUserId
+  , left(t3.accept_time, 19)        as operationTime
+  , t3.order_no                     as orderNo
+  , t4.category_name                as categoryName
+  , t4.cattype_name                 as cattypeName
+  , concat('(+86)', t4.user_phone)  as demandUserPhone
+  , t5.org_ID                       as orgID
+  , left(t5.create_time, 19)        as createTime
+  , (
+        select a.login_sysname from coz_lgcode_fixed_data a where a.guid = t2.lgcode_guid and a.del_flag = '0'
+    )                               as supplySystem
+  , t5.name                         as orgName
+  , concat('(+86)', t5.phonenumber) as phonenumber
+from
+    coz_server3_cate_dealstatus_statistic t1
+    left join
+        coz_cattype_sd_path               t2
+            on t1.sd_path_guid = t2.guid
+    inner join
+        coz_order                         t3
+            on t1.biz_guid = t3.guid
+    inner join
+        coz_demand_request                t4
+            on t3.request_guid = t4.guid
+    inner join
+        coz_org_info                      t5
+            on t3.supply_user_id = t5.user_id
+where
+      t1.del_flag = '0'
+  and t3.del_flag = '0'
+  and t4.del_flag = '0'
+  and t3.accept_status = '1'
+  and (('{targetUserType}' = '1' and t1.demand_sys_user_guid = '{targetUserId}') or
+       ('{targetUserType}' = '2' and t1.supply_sys_user_guid = '{targetUserId}') or
+       ('{targetUserType}' = '3' and t1.category_guid = '{targetUserId}'))
+  and left(t3.accept_time, 7) = '{operationMonth}'
+  and (t3.order_no like '%{orderNo}%' or '{orderNo}' = '')
 order by t3.accept_time desc
 Limit {compute:[({page}-1)*{size}]/compute},{size};
 

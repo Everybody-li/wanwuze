@@ -9,6 +9,30 @@
 -- ##input bizType string[1] NOTNULL;业务类型：1-供需需求信息配置，2-供应报价信息配置， 4-采购资质信息配置，必填
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
+set @categoryGuid = null,@bizType = null;
+
+select category_guid, biz_type
+into @categoryGuid,@bizType
+from
+    coz_model_plate_field
+where guid = '{plateFieldGuid}';
+
+update coz_category_deal_mode
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where @bizType = 1 and category_guid = @categoryGuid;
+
+update coz_category_supply_price
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where @bizType = 2  and category_guid = @categoryGuid;
+
 
 update coz_model_plate_field_content
 set publish_flag='0'

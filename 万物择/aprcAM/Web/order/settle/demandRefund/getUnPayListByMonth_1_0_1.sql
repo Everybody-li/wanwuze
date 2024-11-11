@@ -26,43 +26,42 @@
 -- ##output refundFee decimal[>=0] 1;退款结算金额（保留2位小数）
 
 
-PREPARE q1 FROM '
-select
-*
+select *
 from
-(
-select
-left(t.create_time,10) as cancelTime
-,t.guid as bizGuid
-,t.order_guid as orderGuid
-,t2.name as categoryName
-,t2.cattype_name as cattypeName
-,t1.order_no as orderNo
-,t3.guid as demandUserId
-,''1'' as demandUserType
-,t3.user_name as userName
-,t3.nation as userNation
-,t3.phonenumber as userPhonenumber
-,t1.supply_user_id as supplyUserId
-,''2'' as supplyUserType
-,cast(t.refund_fee/100 as decimal(18,2)) as refundFee
-from
-coz_order_cancel t
-left join
-coz_order t1
-on t.order_guid=t1.guid
-left join
-coz_category_info t2
-on t1.category_guid=t2.guid
-left join
-sys_app_user t3
-on t1.demand_user_id=t3.guid
-where 
-left(t.create_time,7)=''{month}'' and t2.mode=3 and t.del_flag=''0'' and (t1.order_no like ''%{orderNo}%'' or ''{orderNo}''='''') and (t.cancel_object=''2'') and t.refund_pay_status<>''2''
-)t
+    (
+        select
+            left(t.create_time, 10)                    as cancelTime
+          , t.guid                                     as bizGuid
+          , t.order_guid                               as orderGuid
+          , t2.name                                    as categoryName
+          , t2.cattype_name                            as cattypeName
+          , t1.order_no                                as orderNo
+          , t3.guid                                    as demandUserId
+          , '1'                                        as demandUserType
+          , t3.user_name                               as userName
+          , t3.nation                                  as userNation
+          , t3.phonenumber                             as userPhonenumber
+          , t1.supply_user_id                          as supplyUserId
+          , '2'                                        as supplyUserType
+          , cast(t.refund_fee / 100 as decimal(18, 2)) as refundFee
+        from
+            coz_order_cancel      t
+            left join
+                coz_order         t1
+                    on t.order_guid = t1.guid
+            left join
+                coz_category_info t2
+                    on t1.category_guid = t2.guid
+            left join
+                sys_app_user      t3
+                    on t1.demand_user_id = t3.guid
+        where
+              left(t.create_time, 7) = '{month}'
+          and t2.mode = 3
+          and t.del_flag = '0'
+            {dynamic:orderNo[ and t1.order_no like '%{orderNo}%' ]/dynamic}
+          and (t.cancel_object = '2')
+          and t.refund_pay_status <> '2'
+    ) t
 order by t.cancelTime desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size};

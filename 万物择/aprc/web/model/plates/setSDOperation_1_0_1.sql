@@ -12,6 +12,32 @@
 -- ##input fileTemplateDisplay string[200] NULL;图片文件原始文件名,样例值:员工模板.xlxs
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
+
+
+set @categoryGuid = null,@bizType = null,@cat_tree_code = null;
+
+select category_guid, biz_type, cat_tree_code
+into @categoryGuid,@bizType,@cat_tree_code
+from
+    coz_model_plate_field
+where guid = '{plateFieldGuid}';
+
+update coz_category_deal_mode
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where @bizType = 1 and category_guid = @categoryGuid;
+
+update coz_category_supply_price
+set
+    publish_flag='0'
+  , update_by='{curUserId}'
+  , update_time=now()
+  , publish_time= null
+where @bizType = 2  and category_guid = @categoryGuid;
+
 update coz_model_plate_field
 set
     operation='{operation}'

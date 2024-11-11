@@ -100,6 +100,7 @@ where publish_flag = '0'
 ;
 update coz_category_supply_price
 set publish_time=now()
+,publish_flag = '2'
 ,update_time = now()
 ,update_by = '{curUserId}'
 where category_guid = '{categoryGuid}'

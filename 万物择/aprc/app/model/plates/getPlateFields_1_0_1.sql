@@ -15,10 +15,9 @@
 -- ##output placeholder string[50] 操作提示语;供/需方操作提示语
 -- ##output norder int[>=0] 1;板块字段顺序
 -- ##output plateFieldContentCode string[50] 字段内容固化库code,;字段内容固化库code,字段内容是固化时有值
--- ##output fileTemplate string[41] 字段内容固化库code,;字段内容固化库code,字段内容是固化时有值
--- ##output fileTemplateDisplay string[200] 字段内容固化库code,;字段内容固化库code,字段内容是固化时有值
 -- ##output fileTemplate string[41] ;字段内容是固化时有值文件/图片模板(下载文件用此字段),样例值:c02cf50d-b05f-43a2-81a2-ab2f0945eeb0.xlxs
 -- ##output fileTemplateDisplay string[200] ;字段内容是固化时有值文件展示名称(原始文件名,展示用此字段),样例值:员工模板.xlxs
+
 select
 t.guid as fieldGuid
 ,plate_formal_guid as plateGuid

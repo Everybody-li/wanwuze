@@ -14,21 +14,34 @@
 -- ##output operation int[>=0] 1;供/需方操作（1-单选框，2-复选框，3-填写文本框，4-图片上传，5-文档上传）
 -- ##output placeholder string[50] 操作提示语;供/需方操作提示语
 -- ##output norder int[>=0] 1;板块字段顺序
+-- ##output fileTemplate string[41] ;字段内容是固化时有值文件/图片模板(下载文件用此字段),样例值:c02cf50d-b05f-43a2-81a2-ab2f0945eeb0.xlxs
+-- ##output fileTemplateDisplay string[200] ;字段内容是固化时有值文件展示名称(原始文件名,展示用此字段),样例值:员工模板.xlxs
 
 select
-t.guid as fieldGuid
-,plate_formal_guid as plateGuid
-,(select code from coz_model_fixed_data where code=t.name) as fieldFDCode
-,alias
-,norder
-,source
-,content_source as contentSource
-,operation
-,placeholder
-,uuid() as bizGuid
-,file_template as fileTemplate
-,CONCAT('{ChildRows_aprc\\webSuOrg\\model\\plates\\getFieldContents_1_0_1:category_guid=''',t.category_guid,''' and cat_tree_code=''',t.cat_tree_code,''' and fieldname=''',t.name,''' and biz_type=',t.biz_type,' and content_source=',t.content_source,'}') as `content`
+    t.guid                                                as fieldGuid
+  , plate_formal_guid                                     as plateGuid
+  , (
+        select code
+        from coz_model_fixed_data
+        where code = t.name
+    )                                                     as fieldFDCode
+  , alias
+  , norder
+  , source
+  , content_source                                        as contentSource
+  , operation
+  , placeholder
+  , uuid()                                                as bizGuid
+  , file_template                                         as fileTemplate
+  , file_template_display                                 as fileTemplateDisplay
+  , CONCAT('{ChildRows_aprc\\webSuOrg\\model\\plates\\getFieldContents_1_0_1:category_guid=''', t.category_guid,
+           ''' and cat_tree_code=''', t.cat_tree_code, ''' and fieldname=''', t.name, ''' and biz_type=', t.biz_type,
+           ' and content_source=', t.content_source, '}') as `content`
 from
-coz_model_plate_field_formal t
-where t.del_flag='0' and t.biz_type='{bizType}' and t.cat_tree_code='{catTreeCode}' and t.category_guid='{categoryGuid}'
-order by norder,t.id
+    coz_model_plate_field_formal t
+where
+      t.del_flag = '0'
+  and t.biz_type = '{bizType}'
+  and t.cat_tree_code = '{catTreeCode}'
+  and t.category_guid = '{categoryGuid}'
+order by norder, t.id
