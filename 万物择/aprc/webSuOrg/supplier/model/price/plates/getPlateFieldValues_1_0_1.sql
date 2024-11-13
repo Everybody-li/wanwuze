@@ -14,6 +14,7 @@ select {file[aprc/app/demand/dReq/plates/codeCondition_1_0_1.sql]/file} as value
      , t.guid                                                  as modelPricePlateGuid
      , t.plate_field_formal_guid                               as fieldGuid
      , ''                                                      as bizValue
+     , t.plate_field_value_remark as plateFieldValueRemark
 from coz_category_supplier_model_price_plate t
 where t.model_price_guid = '{modelPriceGuid}'
   and t.del_flag = '0';

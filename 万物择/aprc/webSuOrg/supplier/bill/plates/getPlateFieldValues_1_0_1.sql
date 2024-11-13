@@ -8,11 +8,15 @@
 -- ##CustomFormatterColumns[{column:[value]/column}{url:[http://127.0.0.1:8011/html?SqlCmdName=aprc\app\demand\dReq\plates\codeToPathName_1_0_1&DBC=w_a&{Value}]/url}];
 
 
-select {file[aprc/app/demand/dReq/plates/codeCondition_1_0_1.sql]/file} as value
-     , t.guid                                                  as supplierBillGuid
-     , t.plate_field_value                                     as bizCode
-     , t.plate_field_formal_guid                               as fieldGuid
-     , ''                                                      as bizValue
-from coz_category_supplier_bill t
-where t.supplier_guid = '{supplierGuid}'
+select
+    {file[aprc/app/demand/dReq/plates/codeCondition_1_0_1.sql]/file} as value
+  , t.guid as supplierBillGuid
+  , t.plate_field_value as bizCode
+  , t.plate_field_formal_guid as fieldGuid
+  , '' as bizValue
+  , t.plate_field_value_remark as plateFieldValueRemark
+from
+    coz_category_supplier_bill t
+where
+    t.supplier_guid = '{supplierGuid}'
   and t.del_flag = '0';
