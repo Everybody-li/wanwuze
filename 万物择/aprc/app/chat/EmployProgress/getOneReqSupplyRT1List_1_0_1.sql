@@ -4,29 +4,35 @@
 -- ##Describe 
 -- ##CallType[QueryData]
 
--- ##input deRequestGuid char[36] NOTNULL;招聘需求guid，必填
--- ##input curUserId string[36] NOTNULL;登录用户id，必填
--- ##input size int[>=0] NOTNULL;每页多少行数据（默认20），必填
--- ##input page int[>=0] NOTNULL;第几页（默认1），必填
+-- ##input deRequestGuid char[36] NOTNULL;招聘需求guid
+-- ##input curUserId string[36] NOTNULL;登录用户id
+-- ##input size int[>=0] NOTNULL;每页多少行数据（默认20）
+-- ##input page int[>=0] NOTNULL;第几页（默认1）
 
-PREPARE q1 FROM '
+-- ##output requestSupplyGuid char[36] NOTNULL;应聘需求guid
+-- ##output supplyUserId char[36] NOTNULL;应聘方用户id
+-- ##output supplyUserName string[50] NOTNULL;应聘方用户名称
+-- ##output supplyUserResumeImg char[42] NOTNULL;应聘信息方简介图片
+-- ##output sendResmTime char[19] NOTNULL;应聘时间:0000-00-00 00:00:00
+-- ##output recruitGuid char[36] NOTNULL;应聘信息guid，coz_chat_employ的guid
+
 select
-t.guid as requestSupplyGuid
-,t.recruit_user_id as supplyUserId
-,t.recruit_user_name as supplyUserName
-,t.recruit_reimg as supplyUserResumeImg
-,left(t1.create_time,16) as sendResmTime
-,t1.recruit_guid as recruitGuid
+    t.guid                   as requestSupplyGuid
+  , t.recruit_user_id        as supplyUserId
+  , t.recruit_user_name      as supplyUserName
+  , t.recruit_reimg          as supplyUserResumeImg
+  , left(t1.create_time, 16) as sendResmTime
+  , t1.recruit_guid          as recruitGuid
 from
-coz_chat_supply_request_demand t
-left join
-coz_chat_friend_apply t1
-on t.recruit_guid=t1.recruit_guid
-where 
-t.de_request_guid=''{deRequestGuid}'' and t.del_flag=''0'' and t1.del_flag=''0'' and t1.user_id=''{curUserId}'' and t.recommend_type=''1''
+    coz_chat_supply_request_demand t
+    left join
+        coz_chat_friend_apply      t1
+            on t.recruit_guid = t1.recruit_guid
+where
+      t.de_request_guid = '{deRequestGuid}'
+  and t.del_flag = '0'
+  and t1.del_flag = '0'
+  and t1.user_id = '{curUserId}'
+  and t.recommend_type = '1'
 order by t.create_time desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size}
