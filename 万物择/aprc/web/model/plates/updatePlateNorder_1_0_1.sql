@@ -71,7 +71,7 @@ set
   , update_time=now()
     , publish_time= null
 where @bizType = 1   and @flag1 = 1
-and category_guid = @categoryGuid;
+category_guid = @categoryGuid and publish_flag= '2';
 
 
 update coz_category_supply_price
@@ -81,4 +81,4 @@ set
   , update_time=now()
    , publish_time= null
 where @bizType = 2   and @flag1 = 1
-and category_guid = @categoryGuid;
+category_guid = @categoryGuid and publish_flag= '2';

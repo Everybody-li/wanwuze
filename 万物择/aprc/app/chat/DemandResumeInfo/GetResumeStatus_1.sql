@@ -10,12 +10,14 @@
 -- ##output status enum[0,1] ;需方个人信息入库内容是否失效:0-失效,1-生效
 -- ##output statusTime char[19] ;需方个人信息入库内容失效时间:0000-00-00 00:00:00
 -- ##output msg string[100] ;失效弹窗提示语:个人信息有新版本发布，请按照最新版本编辑入库。
+-- ##output salesFlag enum[0,1] ;上下架状态:0-下架,1-上架
 
 
 select
     guid        as demandResumeGuid
   , `status`    as status
   , status_time as statusTime
+  , sales_flag as salesFlag
 from
     coz_chat_demand_resume
 where user_id = '{curUserId}' and del_flag = '0'

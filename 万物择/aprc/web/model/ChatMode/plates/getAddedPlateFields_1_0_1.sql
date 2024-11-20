@@ -16,6 +16,7 @@
 -- ##output categoryGuid char[36] 品类guid;品类guid
 -- ##output plateTypeGuid char[36] 板块类型guid;板块类型guid（关联了板块类型则不为空）
 -- ##output catTreeCode string[50] supply;采购还是供应（supply：供应，demand：采购）
+-- ##output contOpFlag enum[0,1] supply;字段内容是否配置:0-否,1-是
 
 select
 t.guid as plateFieldGuid

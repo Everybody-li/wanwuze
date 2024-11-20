@@ -21,7 +21,7 @@ select
   , t.plate_formal_guid                      as plateGuid
   , t.plate_field_formal_guid                as fieldGuid
   , t.operation
-  , CONCAT('{ChildRows_aprc\\app\\chat\\ResumeInfo\\plates\\getPlateFieldValues_1_0_1:fieldGuid=''',
+  , CONCAT('{ChildRows_aprc\\app\\chat\\DemandResumeInfo\\plates\\getPlateFieldValues_1_0_1:fieldGuid=''',
            t.plate_field_formal_guid, '''}') as `values`
 from
     coz_chat_demand_resume_plate t

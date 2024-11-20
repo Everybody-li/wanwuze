@@ -26,7 +26,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time=0
-where @Flag4='1' and category_guid = @categoryGuid;
+where @Flag4='1'  and category_guid = @categoryGuid and publish_flag = '2';
 
 
 update coz_model_chat_plate

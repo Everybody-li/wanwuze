@@ -13,22 +13,25 @@
 -- ##input curUserId string[36] NOTNULL;登录用户id字段
 
 insert into
-    coz_chat_demand_resume( guid, sd_path_guid,cattype_guid, cattype_name
+    coz_chat_demand_resume( guid, sd_path_guid, cattype_guid, cattype_name
                           , category_guid, category_name, category_img, category_alias
+                          , sales_flag, sales_time
                           , status, status_time
                           , user_id, user_name, user_phone
                           , del_flag, create_by, create_time, update_by, update_time )
 select
     '{demandResumeGuid}' as guid
   , '{sdPathGuid}'       as sdPathGuid
-  , '{cattypeGuid}'      as cattypeGuid
-  , '{cattypeName}'      as cattypeName
-  , '{categoryGuid}'     as categoryGuid
-  , '{categoryName}'     as categoryName
+  , guid                 as cattypeGuid
+  , name                 as cattypeName
+  , guid                 as categoryGuid
+  , name                 as categoryName
   , t.img                as categoryImg
-  , '{categoryAlias}'    as categoryAlias
-  , '0'                  as sales_flag
+  , name                 as categoryAlias
+  , '1'                  as sales_flag
   , now()                as sales_time
+  , '1'                  as `status`
+  , now()                as status_time
   , '{userId}'           as userId
   , '{userName}'         as userName
   , '{userPhone}'        as userPhone
@@ -38,6 +41,6 @@ select
   , '{curUserId}'        as update_by
   , now()                as update_time
 from
-    coz_category_info t
+    coz_cattype_fixed_data t
 where guid = '{categoryGuid}'
 ;

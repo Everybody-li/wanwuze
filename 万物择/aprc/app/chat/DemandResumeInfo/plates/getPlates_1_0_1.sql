@@ -18,7 +18,7 @@ select
   , t.plate_norder       as norder
   , t.plate_formal_alias as alias
   , t.plate_formal_guid  as plateGuid
-  , CONCAT('{ChildRows_aprc\\app\\chat\\ResumeInfo\\plates\\getPlateFields_1_0_1:plateGuid=''', t.plate_formal_guid,
+  , CONCAT('{ChildRows_aprc\\app\\chat\\DemandResumeInfo\\plates\\getPlateFields_1_0_1:plateGuid=''', t.plate_formal_guid,
            '''}')        as `field`
 from
     coz_chat_demand_resume_plate t

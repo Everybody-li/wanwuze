@@ -4,7 +4,7 @@
 -- ##Describe
 -- ##CallType[QueryData]
 
--- ##input month char[7] NOTNULL;年月:0000-00
+
 -- ##input page int[>0] NOTNULL;第几页
 -- ##input size int[>0] NOTNULL;每页数量
 -- ##input curUserId string[36] NOTNULL;登录用户id字段
@@ -19,5 +19,5 @@ from
 where supply_user_id = '{curUserId}'
 group by month
 order by month desc
-{compute:[({page}-1)*{size}]/compute},{size}
+Limit {compute:[({page}-1)*{size}]/compute},{size}
 

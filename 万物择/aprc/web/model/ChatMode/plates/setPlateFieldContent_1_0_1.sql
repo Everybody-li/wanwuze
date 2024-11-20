@@ -25,7 +25,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where  category_guid = @categoryGuid;
+where  category_guid = @categoryGuid  and publish_flag = '2';
 
 
 insert into
@@ -36,7 +36,6 @@ select
   , cattype_guid
   , cat_tree_code
   , category_guid
-
   , '{plateFieldGuid}'
   , '{content}'
   , '0'

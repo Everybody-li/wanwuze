@@ -16,32 +16,10 @@
 -- ##output userName string[20] ;需方用户姓名
 -- ##output userImg string[42] ;需方简历图片
 
--- 创建临时表存储入库人才信息查找中间结果
-create temporary table temp_chat_resume_match1
-(
-    id                      int      not null auto_increment primary key,
-    demand_user_id          char(36) not null,
-    demand_resume_guid      char(36) not null,
-    sd_path_guid            char(36) not null,
-    plate_formal_guid       char(36) not null,
-    plate_field_formal_guid char(36) not null,
-    max_match_flag          tinyint  not null
-);
-
-create temporary table temp_chat_resume_match2
-(
-    id                      int      not null auto_increment primary key,
-    demand_user_id          char(36) not null,
-    demand_resume_guid      char(36) not null,
-    sd_path_guid            char(36) not null,
-    plate_formal_guid       char(36) not null,
-    plate_field_formal_guid char(36) not null,
-    max_match_flag          tinyint  not null
-);
 
 -- 向临时表插入中间结果
 insert into
-    temp_chat_resume_match1( demand_user_id, demand_resume_guid, sd_path_guid, plate_formal_guid, plate_field_formal_guid
+    temp_chat_resume_match( user_id, sd_path_guid, resume_guid, plate_formal_guid, plate_field_formal_guid
                           , max_match_flag )
 select
     tt.user_id
@@ -86,47 +64,41 @@ from
                 where
                       dt1.del_flag = '0'
                   and dt1.status = '0'
-                  and dt2.operation in ('1', '2')
             ) t
         group by t.user_id, t.sd_path_guid, t.resume_guid, t.plate_formal_guid, t.plate_field_formal_guid, t.match_flag
     ) as tt
 ;
-
-insert into
-    temp_chat_resume_match2( demand_user_id, demand_resume_guid, sd_path_guid, plate_formal_guid, plate_field_formal_guid
-                          , max_match_flag )
-select demand_user_id,demand_resume_guid,sd_path_guid,plate_field_formal_guid,plate_field_formal_guid,max_match_flag from temp_chat_resume_match1;
 
 -- 查询最终结果数量
 set @matchCount = 0;
 select count(1)
 into @matchCount
 from
-    temp_chat_resume_match1 t1
+    temp_chat_resume_match t1
 where
-    not exists(select 1 from temp_chat_resume_match2 t2 where t1.demand_resume_guid = t2.demand_resume_guid and t2.max_match_flag = 0);
+    not exists(select 1 from temp_chat_resume_match t2 where t1.resume_guid = t2.resume_guid and t2.max_match_flag = 0);
 
 -- 查询最终结果
 select
-    tt1.demand_resume_guid as demandResumeGuid
-  , tt1.demand_user_id     as userId
+    tt1.resume_guid as demandResumeGuid
+  , tt1.user_id     as userId
   , tt2.nick_name   as userName
   , tt3.img         as userImg
   , @matchCount     as totalCount
 from
     (
-        select sd_path_guid, demand_resume_guid, demand_user_id
+        select sd_path_guid, resume_guid, user_id
         from
-            temp_chat_resume_match1 t1
+            temp_chat_resume_match t1
         where
             not exists(select 1
                        from
-                           temp_chat_resume_match2 t2
-                       where t1.demand_resume_guid = t2.demand_resume_guid and t2.max_match_flag = 0)
+                           temp_chat_resume_match t2
+                       where t1.resume_guid = t2.resume_guid and t2.max_match_flag = 0)
     )                           tt1
-    inner join sys_app_user     tt2 on tt1.demand_user_id = tt2.guid
-    left join  coz_user_biz_img tt3 on tt1.demand_user_id = tt3.user_id
+    inner join sys_app_user     tt2 on tt1.user_id = tt2.guid
+    left join  coz_user_biz_img tt3 on tt1.user_id = tt3.user_id
 where tt3.demand_path_guid = tt1.sd_path_guid and tt2.del_flag = '0' and tt3.del_flag = '0'
 order by tt2.id desc
-Limit {compute:[({page}-1)*{size}]/compute},{size};
+Limit {compute:[({page}-1)*{size}]/compute},{size}
 

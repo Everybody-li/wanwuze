@@ -30,7 +30,7 @@ t.guid as fieldGuid
 ,file_template as fileTemplate
 ,file_template_display as fileTemplateDisplay
 ,case when(content_source=3) then (select content_source from coz_model_plate_field_formal where guid=t.demand_pf_formal_guid) else content_source end as plateFieldContentCode
-,CONCAT('{ChildRows_aprc\\app\\model\\plates\\getFieldContents_1_0_1:category_guid=''',t.category_guid,''' and cat_tree_code=''',t.cat_tree_code,''' and fieldname=''',t.name,''' and content_source=',t.content_source,'}') as `content`
+,CONCAT('{ChildRows_aprc\\app\\model\\ChatPlates\\getFieldContents_1_0_1:category_guid=''',t.category_guid,''' and cat_tree_code=''',t.cat_tree_code,''' and fieldname=''',t.name,''' and content_source=',t.content_source,'}') as `content`
 from
 coz_model_chat_plate_field_formal t
 where t.del_flag='0' and t.cat_tree_code='{catTreeCode}' and t.category_guid='{categoryGuid}'

@@ -69,5 +69,5 @@ set
   , update_time=now()
     , publish_time= null
 where  @flag1 = 1
-and category_guid = @categoryGuid;
+ and category_guid = @categoryGuid and publish_flag = '2';
 

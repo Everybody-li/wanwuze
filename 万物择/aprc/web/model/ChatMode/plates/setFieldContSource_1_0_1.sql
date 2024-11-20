@@ -7,7 +7,7 @@
 
 -- ##input plateFieldGuid char[36] NOTNULL;字段名称guid，必填
 -- ##input contentSource int[>=0] NOTNULL;字段内容来源（1-固化，2-自建，3-需方），必填
--- ##input curUserId string[36] NOTNULL;登录用户id，必填
+-- ##input22 curUserId string[36] NOTNULL;登录用户id，必填
 
 
 set @categoryGuid = null;
@@ -21,23 +21,23 @@ where guid = '{plateFieldGuid}';
 update coz_category_chat_mode
 set
     publish_flag='0'
-  , update_by='{curUserId}'
+  , update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
   , update_time=now()
   , publish_time= null
-where category_guid = @categoryGuid;
+where category_guid = @categoryGuid and del_flag = '2';
 
 
 update coz_model_chat_plate_field
 set content_source='{contentSource}'
 ,publish_flag='0'
-,update_by='{curUserId}'
+,update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
 ,update_time=now()
 where guid='{plateFieldGuid}'
 ;
 update coz_model_chat_plate_field_content
 set del_flag='2'
 ,publish_flag='0'
-,update_by='{curUserId}'
+,update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
 ,update_time=now()
 where plate_field_guid='{plateFieldGuid}'
 ;

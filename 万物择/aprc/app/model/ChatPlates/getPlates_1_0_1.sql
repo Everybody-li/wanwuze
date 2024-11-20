@@ -4,8 +4,9 @@
 -- ##Describe
 -- ##CallType[QueryData]
 
--- ##input categoryGuid char[36] NOTNULL;品类guid，必填
--- ##input curUserId string[36] NOTNULL;登录用户id，必填
+-- ##input categoryGuid char[36] NOTNULL;品类guid
+-- ##input catTreeCode enum[demand,supply] NOTNULL;供需区分:需方-demand,供方-supply
+-- ##input curUserId string[36] NOTNULL;登录用户id
 
 -- ##output bizType int[>=0] 1;业务类型（1：供需信息，2：供应报价，4：采购资质）
 -- ##output name string[50] 板块名称;板块名称
@@ -19,7 +20,7 @@ t.norder
 ,t.alias
 ,t.guid as plateGuid
 ,t.fixed_data_code as plateFDCode
-,CONCAT('{ChildRows_aprc\\app\\model\\plates\\getPlateFields_1_0_1:plateGuid=''',t.GUID,'''}') as `field`
+,CONCAT('{ChildRows_aprc\\app\\model\\ChatPlates\\getPlateFields_1_0_1:plateGuid=''',t.GUID,'''}') as `field`
 from
 coz_model_chat_plate_formal t
 where t.del_flag='0' and  t.cat_tree_code='{catTreeCode}' and t.category_guid='{categoryGuid}'

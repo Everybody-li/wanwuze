@@ -6,8 +6,8 @@
 
 -- ##input categoryGuid char[36] NOTNULL;品类guid，必填
 
--- ##input canPublish enum[0,1] NOTNULL;是否可以发布:0-否,1-是
--- ##input notPublishReason string[100] NOTNULL;不可以发布理由
+-- ##output canPublish enum[0,1] NOTNULL;是否可以发布:0-否,1-是
+-- ##output notPublishReason string[100] NOTNULL;不可以发布理由
 
 
 

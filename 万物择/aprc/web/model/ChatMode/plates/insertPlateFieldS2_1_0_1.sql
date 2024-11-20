@@ -19,7 +19,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where  category_guid = '{categoryGuid}';
+where  category_guid = '{categoryGuid}' and publish_flag= '2';
 
 insert into
     coz_model_chat_plate_field

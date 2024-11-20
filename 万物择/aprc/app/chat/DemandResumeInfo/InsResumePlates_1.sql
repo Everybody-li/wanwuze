@@ -25,8 +25,9 @@ insert into
                                 , plate_norder
                                 , plate_field_formal_guid, plate_field_formal_alias, plate_field_code
                                 , plate_field_norder
-                                , plate_field_content_gc, operation, plate_field_value, del_flag, create_by
-                                , create_time )
+                                , plate_field_content_gc, operation, plate_field_value
+                                , status, status_time
+                                , del_flag, create_by, create_time )
 select
     uuid()               as guid
   , '{demandResumeGuid}' as demand_resume_guid
@@ -41,6 +42,8 @@ select
   , '{fieldContentGc}'   as plate_field_content_gc
   , '{operation}'        as operation
   , '{plateFieldValue}'  as plate_field_value
+  , '1'                  as status
+  , now()                as status_time
   , '0'                  as del_flag
   , '{curUserId}'        as create_by
   , now()                as create_time

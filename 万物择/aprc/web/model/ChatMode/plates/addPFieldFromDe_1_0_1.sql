@@ -23,7 +23,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where   category_guid = '{categoryGuid}';
+where   category_guid = '{categoryGuid}' and publish_flag= '2';
 
 update coz_category_chat_mode
 set
@@ -31,7 +31,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where  category_guid = '{categoryGuid}';
+where  category_guid = '{categoryGuid}' and publish_flag= '2';
 
 
 insert into

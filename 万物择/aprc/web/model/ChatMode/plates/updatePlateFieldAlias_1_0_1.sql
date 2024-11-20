@@ -33,7 +33,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
    , publish_time= null
-where  @Flag7 = '1' and category_guid = @categoryGuid;
+where  @Flag7 = '1'  and category_guid = @categoryGuid and publish_flag = '2';
 
 
 update coz_model_chat_plate_field

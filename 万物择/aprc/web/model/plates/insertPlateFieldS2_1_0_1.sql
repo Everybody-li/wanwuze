@@ -19,7 +19,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where {bizType} = 1 and category_guid = '{categoryGuid}';
+where {bizType} = 1 and category_guid = '{categoryGuid}' and publish_flag= '2';
 
 update coz_category_supply_price
 set
@@ -27,7 +27,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where {bizType}  = 2  and category_guid = '{categoryGuid}';
+where {bizType}  = 2  and category_guid = '{categoryGuid}' and publish_flag= '2';
 
 insert into
     coz_model_plate_field
