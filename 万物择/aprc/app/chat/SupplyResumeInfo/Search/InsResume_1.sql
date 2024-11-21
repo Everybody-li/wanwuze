@@ -27,8 +27,8 @@ select
   , '{categoryName}'     as categoryName
   , t.img                as categoryImg
   , '{categoryAlias}'    as categoryAlias
-  , '0'                  as sales_flag
-  , now()                as sales_time
+  , '1'                  as `status`
+  , now()                as status_time
   , '{userId}'           as userId
   , '{userName}'         as userName
   , '{userPhone}'        as userPhone
@@ -38,6 +38,6 @@ select
   , '{curUserId}'        as update_by
   , now()                as update_time
 from
-    coz_category_info t
+    coz_cattype_fixed_data t
 where guid = '{categoryGuid}'
 ;

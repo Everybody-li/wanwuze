@@ -12,20 +12,30 @@
 -- ##output showRedPoint enum[0,1] ;是否展示红点:0-否,1-是
 
 
-select
-    count(recruit_guid)                       as inviteCount
-  , processStatus
-  , if(processStatus = 0, '未处理', '已处理') as processStatusStr
-  , processStatus                             as showRedPoint
+select *, if(tt.processStatus = 0 and inviteCount = 0, 1, 0) as showRedPoint
 from
     (
-        select if(t2.status = '0', 0, 1) as processStatus, t2.recruit_guid
+        select
+            count(t.recruit_guid)                        as inviteCount
+          , ps.processStatus
+          , if(ps.processStatus = 0, '未处理', '已处理') as processStatusStr
         from
-            coz_chat_supply_resume_invitelog t1
+            (
+                select 0 as processStatus
+                union all
+                select 1 as processStatus
+            )     ps
             left join
-                coz_chat_friend_apply        t2 on t1.guid = t2.recruit_guid
-        where t1.demand_user_id = '{curUserId}'
-    ) t
-group by processStatus
+                (
+                    select if(t2.status = '0', 0, 1) as processStatus, t2.recruit_guid
+                    from
+                        coz_chat_supply_resume_invitelog t1
+                        left join
+                            coz_chat_friend_apply        t2 on t1.guid = t2.recruit_guid
+                    where t1.demand_user_id = 'fd99005c-2fd0-4a17-811e-1e2e2e2b98e5'
+#                     where t1.demand_user_id = '{curUserId}'
+                ) t on ps.processStatus = t.processStatus
+        group by processStatus
+    ) tt
 order by processStatus
 

@@ -32,7 +32,7 @@ select
   , now()                as sales_time
   , '1'                  as `status`
   , now()                as status_time
-  , '{userId}'           as userId
+  , '{curUserId}'           as userId
   , '{userName}'         as userName
   , '{userPhone}'        as userPhone
   , 0                    as del_flag
