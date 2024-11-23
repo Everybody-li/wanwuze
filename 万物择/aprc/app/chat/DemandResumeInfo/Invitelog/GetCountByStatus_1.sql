@@ -12,7 +12,7 @@
 -- ##output showRedPoint enum[0,1] ;是否展示红点:0-否,1-是
 
 
-select *, if(tt.processStatus = 0 and inviteCount = 0, 1, 0) as showRedPoint
+select *, if(tt.processStatus = 0 and inviteCount > 0, 1, 0) as showRedPoint
 from
     (
         select
@@ -32,8 +32,7 @@ from
                         coz_chat_supply_resume_invitelog t1
                         left join
                             coz_chat_friend_apply        t2 on t1.guid = t2.recruit_guid
-                    where t1.demand_user_id = 'fd99005c-2fd0-4a17-811e-1e2e2e2b98e5'
-#                     where t1.demand_user_id = '{curUserId}'
+                    where t1.demand_user_id = '{curUserId}'
                 ) t on ps.processStatus = t.processStatus
         group by processStatus
     ) tt

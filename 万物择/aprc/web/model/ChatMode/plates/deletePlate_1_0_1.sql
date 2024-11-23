@@ -24,7 +24,8 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where category_guid = @categoryGuid;
+  , affect_status = '1'
+where category_guid = @categoryGuid and publish_flag = '2';
 
 
 update coz_model_chat_plate_field_content

@@ -19,10 +19,11 @@
 
 
 select
-    t1.guid  as invitelogGuid
+    t1.guid            as invitelogGuid
   , t1.supply_user_id  as userId
-  , t3.user_name            as userName
+  , t3.user_name       as userName
   , t1.supply_user_img as userImg
+  , t3.del_flag        as supplyUserDelFlag
   , t2.create_time     as inviteTime
   , t2.`status`        as inviteStatus
 from
@@ -31,5 +32,5 @@ from
         coz_chat_friend_apply        t2 on t1.guid = t2.recruit_guid
     left join
         sys_app_user                 t3 on t1.supply_user_id = t3.guid
-where t1.demand_user_id = '{curUserId}' and t2.status in ('1','2')
+where t1.demand_user_id = '{curUserId}' and t2.status in ('1', '2')
     Limit {compute:[({page}-1)*{size}]/compute},{size};

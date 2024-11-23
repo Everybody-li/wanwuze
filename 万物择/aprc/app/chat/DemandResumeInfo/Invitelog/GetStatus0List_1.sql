@@ -16,15 +16,17 @@
 -- ##output userImg string[1024] ;供方简历图片,多个用逗号分割
 -- ##output inviteTime char[19] ;邀请时间
 -- ##output supplyUserDelFlag enum[0,1] ;供方账号是否存在:0-存在,2-不存在
+-- ##output applyGuid char[36] ;发起邀请guid
 
 
 select
     t1.guid            as invitelogGuid
   , t1.supply_user_id  as userId
-  , t3.user_name            as userName
-   , t2.create_time     as inviteTime
-   , t1.supply_user_img as userImg
+  , t3.user_name       as userName
+  , t2.create_time     as inviteTime
+  , t1.supply_user_img as userImg
   , t3.del_flag        as supplyUserDelFlag
+  , t2.guid            as applyGuid
 from
     coz_chat_supply_resume_invitelog t1
     left join

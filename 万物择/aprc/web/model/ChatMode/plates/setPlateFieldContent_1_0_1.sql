@@ -10,7 +10,6 @@
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
 
-
 set @categoryGuid = null;
 
 select category_guid
@@ -25,12 +24,13 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where  category_guid = @categoryGuid  and publish_flag = '2';
+  , affect_status = '1'
+where category_guid = @categoryGuid and publish_flag = '2';
 
 
 insert into
     coz_model_chat_plate_field_content( guid, cattype_guid, cat_tree_code, category_guid, plate_field_guid, content
-                                 , publish_flag, del_flag, create_by, create_time, update_by, update_time )
+                                      , publish_flag, del_flag, create_by, create_time, update_by, update_time )
 select
     UUID()
   , cattype_guid

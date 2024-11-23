@@ -9,6 +9,9 @@
 
 set @canPublish =
         '{url:[http://127.0.0.1:8011/html?SqlCmdName=aprc\web\model\ChatMode\isCanPublish_1&categoryGuid={categoryGuid}&DBC=w_a]/url}';
+
+set @IsNeedUpdDeResumeStstus0 =
+        '{url:[http://127.0.0.1:8011/html?SqlCmdName=aprc\web\model\ChatMode\IsNeedUpdDeResumeStstus0_1&categoryGuid={categoryGuid}&DBC=w_a]/url}';
 delete from coz_model_chat_plate_field_content_formal where @canPublish = '1' and category_guid = '{categoryGuid}'
 ;
 delete from coz_model_chat_plate_formal where @canPublish = '1' and category_guid = '{categoryGuid}'
@@ -33,6 +36,7 @@ where @canPublish = '1' and category_guid = '{categoryGuid}'
 order by id desc
 limit 1
 ;
+
 update coz_model_chat_plate
 set
     publish_time=now()
@@ -199,5 +203,19 @@ where
   and t1.publish_flag = '2'
   and t2.guid is not null
 ;
+
+--  web-更新沟通模式-供需需求信息-将需方个人入库信息改为失效
+update coz_chat_demand_resume
+set
+    status      = '0'
+  , status_time = now()
+  , update_by   = '{curUserId}'
+  , update_time = now()
+where @canPublish = '1' and @IsNeedUpdDeResumeStstus0 = '1' and status = '1';
+update coz_chat_demand_resume_plate
+set
+    status      = '0'
+  , status_time = now()
+where @canPublish = '1' and @IsNeedUpdDeResumeStstus0 = '1' and status = '1';
 
 select count(1) as publishNum from coz_category_chat_mode_log where category_guid = '{categoryGuid}'

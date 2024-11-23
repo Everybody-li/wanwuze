@@ -25,7 +25,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where @bizType = 1 category_guid = @categoryGuid and publish_flag= '2';
+where @bizType = 1  and category_guid = @categoryGuid and publish_flag= '2';
 
 update coz_category_supply_price
 set
@@ -33,7 +33,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where @bizType = 2  category_guid = @categoryGuid and publish_flag= '2';
+where @bizType = 2   and category_guid = @categoryGuid and publish_flag= '2';
 
 update coz_model_plate_field 
 set plate_guid='{plateGuid}'

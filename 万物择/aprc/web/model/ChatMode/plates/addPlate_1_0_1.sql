@@ -20,6 +20,7 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
+  , affect_status = '1'
 where category_guid = '{categoryGuid}' and publish_flag= '2';
 
 

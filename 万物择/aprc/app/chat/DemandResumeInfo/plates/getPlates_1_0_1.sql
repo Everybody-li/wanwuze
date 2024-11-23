@@ -7,10 +7,11 @@
 -- ##input demandResumeGuid string[500] NOTNULL;需方入库人才信息guid
 -- ##input curUserId string[36] NOTNULL;登录用户id
 
--- ##output status enum[0,1] NOTNULL ;状态:0-失效,1-生效
--- ##output norder int[>0] NOTNULL ;板块顺序
--- ##output alias string[20] NOTNULL ;板块别名
--- ##output plateGuid char[36] NOTNULL ;板块guid
+-- ##output status enum[0,1] ;状态:0-失效,1-生效
+-- ##output norder int[>0] ;板块顺序
+-- ##output alias string[20] ;板块别名
+-- ##output plateGuid char[36] ;板块guid
+-- ##output plateCode char[6] ;板块code
 
 
 select
@@ -18,6 +19,7 @@ select
   , t.plate_norder       as norder
   , t.plate_formal_alias as alias
   , t.plate_formal_guid  as plateGuid
+  , t.plate_code         as plateCode
   , CONCAT('{ChildRows_aprc\\app\\chat\\DemandResumeInfo\\plates\\getPlateFields_1_0_1:plateGuid=''', t.plate_formal_guid,
            '''}')        as `field`
 from

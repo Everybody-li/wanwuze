@@ -22,6 +22,7 @@ select
     {file[aprc/app/demand/dReq/plates/codeCondition_1_0_1.sql]/file} as value
   , t.guid                                                            as plateGuid
   , t.plate_field_formal_guid                                         as fieldGuid
+  , t.plate_field_content_gc                                         as contentFDCode
 from
     coz_chat_demand_resume_plate t
 where

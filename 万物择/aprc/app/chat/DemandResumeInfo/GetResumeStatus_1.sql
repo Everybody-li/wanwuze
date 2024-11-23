@@ -18,6 +18,7 @@ select
   , `status`    as status
   , status_time as statusTime
   , sales_flag as salesFlag
+  , '个人信息有新版本发布，请按照最新版本编辑入库' as msg
 from
     coz_chat_demand_resume
 where user_id = '{curUserId}' and del_flag = '0'

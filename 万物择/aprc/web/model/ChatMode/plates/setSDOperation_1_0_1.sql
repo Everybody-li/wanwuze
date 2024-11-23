@@ -13,7 +13,6 @@
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
 
-
 set @categoryGuid = null,@cat_tree_code = null;
 
 select category_guid, cat_tree_code
@@ -28,13 +27,13 @@ set
   , update_by='{curUserId}'
   , update_time=now()
   , publish_time= null
-where  category_guid = @categoryGuid  and publish_flag = '2';
+  , affect_status = '1'
+where category_guid = @categoryGuid and publish_flag = '2';
 
 update coz_model_chat_plate_field
 set
     operation='{operation}'
-  , placeholder='{placeholder}'
-  {dynamic:fileTemplate[, file_template='{fileTemplate}' ]/dynamic}
+  , placeholder='{placeholder}' {dynamic:fileTemplate[, file_template='{fileTemplate}' ]/dynamic}
   {dynamic:fileTemplateDisplay[, file_template_display='{fileTemplateDisplay}']/dynamic}
   , publish_flag=0
 where guid = '{plateFieldGuid}'

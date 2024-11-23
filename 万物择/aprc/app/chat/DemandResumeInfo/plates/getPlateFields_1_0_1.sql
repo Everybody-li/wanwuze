@@ -13,6 +13,9 @@
 -- ##output alias string[100] NOTNULL ;字段别名
 -- ##output plateGuid char[36] NOTNULL ;板块guid
 -- ##output fieldGuid char[36] NOTNULL ;字段guid
+-- ##output operation char[36] NOTNULL ;字段guid
+-- ##output contentSource enum[1,2,3] NOTNULL ;字段内容来源：1-固化，2-自建，3-需方
+-- ##output contentFDCode string[200] NOTNULL ;字段内容guid：自建的字段内容值guid或固化字段内容值code，冗余
 
 
 select
@@ -21,10 +24,14 @@ select
   , t.plate_formal_guid                      as plateGuid
   , t.plate_field_formal_guid                as fieldGuid
   , t.operation
+  , t1.content_source                        as contentSource
   , CONCAT('{ChildRows_aprc\\app\\chat\\DemandResumeInfo\\plates\\getPlateFieldValues_1_0_1:fieldGuid=''',
            t.plate_field_formal_guid, '''}') as `values`
+  , CONCAT('{ChildRows_aprc\\app\\chat\\DemandResumeInfo\\plates\\getPlateFieldContent_1_0_1:fieldGuid=''',
+           t.plate_field_formal_guid, '''}') as `content`
 from
-    coz_chat_demand_resume_plate t
+    coz_chat_demand_resume_plate                 t
+    inner join coz_model_chat_plate_field_formal t1 on t.plate_field_formal_guid = t1.guid
 where
       t.demand_resume_guid = '{demandResumeGuid}'
   and t.del_flag = '0'

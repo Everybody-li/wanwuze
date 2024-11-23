@@ -10,16 +10,22 @@
 -- ##input page int[>=0] NOTNULL;第几页（默认1），必填
 
 select
-t.plate_field_guid  as plateFieldGuid
-,t.guid as fieldContentGuid
-,case when(t1.content_source='1') then (select name from coz_model_fixed_data where code=t.content and del_flag = '0')
-    else t.content end as content
+    t.plate_field_guid     as plateFieldGuid
+  , t.guid                 as fieldContentGuid
+  , case
+        when (t1.content_source = '1') then (
+                                                select name
+                                                from coz_model_fixed_data
+                                                where guid = t.content and del_flag = '0'
+        )
+        else t.content end as content
 from
-coz_model_chat_plate_field_content t
-left join
-coz_model_chat_plate_field t1
-on t.plate_field_guid=t1.guid
-where 
-t.plate_field_guid='{plateFieldGuid}' and t.del_flag='0'
+    coz_model_chat_plate_field_content t
+    left join
+        coz_model_chat_plate_field     t1
+            on t.plate_field_guid = t1.guid
+where
+      t.plate_field_guid = '{plateFieldGuid}'
+  and t.del_flag = '0'
 order by t.id
 Limit {compute:[({page}-1)*{size}]/compute},{size}

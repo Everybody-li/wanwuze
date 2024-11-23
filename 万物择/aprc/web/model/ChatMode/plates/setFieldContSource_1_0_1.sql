@@ -24,20 +24,23 @@ set
   , update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
   , update_time=now()
   , publish_time= null
+  , affect_status = '1'
 where category_guid = @categoryGuid and del_flag = '2';
 
 
 update coz_model_chat_plate_field
-set content_source='{contentSource}'
-,publish_flag='0'
-,update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
-,update_time=now()
-where guid='{plateFieldGuid}'
+set
+    content_source='{contentSource}'
+  , publish_flag='0'
+  , update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
+  , update_time=now()
+where guid = '{plateFieldGuid}'
 ;
 update coz_model_chat_plate_field_content
-set del_flag='2'
-,publish_flag='0'
-,update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
-,update_time=now()
-where plate_field_guid='{plateFieldGuid}'
+set
+    del_flag='2'
+  , publish_flag='0'
+  , update_by='aaf5cda9-a619-11ef-814e-00163e2ca549'
+  , update_time=now()
+where plate_field_guid = '{plateFieldGuid}'
 ;
