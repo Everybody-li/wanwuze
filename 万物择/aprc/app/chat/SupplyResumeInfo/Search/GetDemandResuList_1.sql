@@ -146,8 +146,8 @@ from
         group by sd_path_guid, demand_resume_guid, demand_user_id
     )                              tt1
     inner join sys_app_user        tt2 on tt1.demand_user_id = tt2.guid
-    left join  coz_user_biz_img    tt3 on tt1.demand_user_id = tt3.user_id
-    left join  coz_cattype_sd_path sdp on tt1.sd_path_guid = sdp.guid and sdp.demand_path_guid = tt3.demand_path_guid
+    inner join  coz_user_biz_img    tt3 on tt1.demand_user_id = tt3.user_id
+    inner join  coz_cattype_sd_path sdp on tt1.sd_path_guid = sdp.guid and sdp.demand_path_guid = tt3.demand_path_guid
 where (tt3.guid is null or (tt3.guid is not null and tt3.del_flag = '0')) and tt2.del_flag = '0'
 order by tt2.id desc
 Limit {compute:[({page}-1)*{size}]/compute},{size};

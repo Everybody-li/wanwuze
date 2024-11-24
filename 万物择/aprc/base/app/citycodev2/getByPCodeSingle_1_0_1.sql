@@ -6,7 +6,7 @@
 -- ##CallType[QueryData]
 
 -- ##input bizCode char[6] NOTNULL;业务字段内容code(例如:'c00008'、'c00009'、'c00010'、'c00011'、'c00012'、'c00021'、'c00022'、'c00023'、'c00020'、'c00024')，必填
--- ##input nodeParentCode string[20] NOTNULL;父节点code，必填
+-- ##input parentCode string[20] NOTNULL;父节点code，必填
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
 -- ##output nodeHasSon enum[0,1] 1;是否有儿子节点（0-否，1-是，后端根据区域最大层级计算是否当前节点有儿子）
@@ -41,6 +41,6 @@ select case
      , name             as nodeName
      , `level`          as nodeLevel
 from {url:[http://127.0.0.1:8011/html?SqlCmdName=aprc\base\getCodeTable_1_0_1&bizCode={bizCode}&DBC=w_a]/url} t
-where 1=1  {dynamic:nodeParentCode[and t.parent_code = '{nodeParentCode}']/dynamic} {dynamic:parentCode[and t.parent_code = '{parentCode}']/dynamic}
+where 1=1  {dynamic:parentCode[and t.parent_code = '{parentCode}']/dynamic} {dynamic:parentCode[and t.parent_code = '{parentCode}']/dynamic}
 order by id;
 

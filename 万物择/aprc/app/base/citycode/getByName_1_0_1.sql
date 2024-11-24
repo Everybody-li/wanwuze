@@ -12,10 +12,9 @@
 -- ##input size int[>=0] NOTNULL;每页多少行数据（默认20），必填
 -- ##input page int[>=0] NOTNULL;第几页（默认1），必填
 
-PREPARE q1 FROM '
 select 
 guid
-,case when(''{code}'' like concat(''%'',code,''%'')) then ''1'' else ''0'' end as selectedFlag
+,case when('{code}' like concat('%',code,'%')) then '1' else '0' end as selectedFlag
 ,id
 ,code
 ,parent_code as parentCode
@@ -23,10 +22,7 @@ guid
 ,path_name as pathName
 ,level
 from sys_city_code t
-where (path_name like ''%{name}%'' or ''{name}''='''') and version=1 and level={level}
+where 1 {dynamic:name[and t.name like '{name}%']/dynamic} and t.level={level}
 order by id
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size};
+

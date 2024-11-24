@@ -17,6 +17,9 @@
 -- ##input plateFieldValueRemark string[200] NOTNULL;板块字段内容值字段备注(当是图片或文件类时,存图片文件原始名称)
 -- ##input contentFDCode string[200] NULL;板块字段内容固化code(字段内容来源是系统固化时有值)，非必填
 -- ##input operation enum[1,2,3,4,5] NOTNULL;板块字段值操作设置（1-单选框，2-复选框，3-填写文本框，4-图片上传，5-文档上传）字段
+-- ##input contentSource enum[1,2,3] NOTNULL;字段内容来源：1-固化，2-自建，3-需方
+-- ##input fileTemplate string[200] NULL;文件访问下载
+-- ##input fileTemplateDisplay string[200] NULL;文件展示名称
 -- ##input curUserId string[36] NOTNULL;登录用户id字段
 
 

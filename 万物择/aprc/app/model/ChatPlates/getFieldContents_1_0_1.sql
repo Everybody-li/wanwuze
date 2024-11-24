@@ -24,6 +24,7 @@ where
       t1.category_guid = '{categoryGuid}'
   and t1.cat_tree_code = '{catTreeCode}'
   and t1.content_source = '1' --  查固化库
+  and (t4.guid is null or t4.parent_guid = '0') --  查固化库
 union all
 select
     t1.guid    as fieldGuid
@@ -56,6 +57,7 @@ where
   and t1.category_guid = '{categoryGuid}'
   and t1.cat_tree_code = 'demand'
   and t1.content_source = '1' --  查同需方固化库
+  and (t4.guid is null or t4.parent_guid = '0')
 union all
 select
     t5_su.guid as fieldGuid

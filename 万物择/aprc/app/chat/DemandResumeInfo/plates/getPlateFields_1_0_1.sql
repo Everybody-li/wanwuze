@@ -15,7 +15,9 @@
 -- ##output fieldGuid char[36] NOTNULL ;字段guid
 -- ##output operation char[36] NOTNULL ;字段guid
 -- ##output contentSource enum[1,2,3] NOTNULL ;字段内容来源：1-固化，2-自建，3-需方
--- ##output contentFDCode string[200] NOTNULL ;字段内容guid：自建的字段内容值guid或固化字段内容值code，冗余
+-- ##output contentFDCode string[200] NOTNULL ;字段内容guid：自建的字段内容值guid或固化字段内容值code
+-- ##output fileTemplate string[200] NOTNULL ;文件访问下载
+-- ##output fileTemplateDisplay string[200] NOTNULL ;文件展示名称
 
 
 select
@@ -25,6 +27,8 @@ select
   , t.plate_field_formal_guid                as fieldGuid
   , t.operation
   , t1.content_source                        as contentSource
+  , t1.file_template                            as fileTemplate
+  , t1.file_template_display                    as fileTemplateDisplay
   , CONCAT('{ChildRows_aprc\\app\\chat\\DemandResumeInfo\\plates\\getPlateFieldValues_1_0_1:fieldGuid=''',
            t.plate_field_formal_guid, '''}') as `values`
   , CONCAT('{ChildRows_aprc\\app\\chat\\DemandResumeInfo\\plates\\getPlateFieldContent_1_0_1:fieldGuid=''',
