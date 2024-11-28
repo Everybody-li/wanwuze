@@ -11,6 +11,7 @@
 # 修改品类名称的供需信息主表的发布时间为当前时间
 update coz_category_deal_mode t
 set publish_time=now()
+  ,publish_flag='2'
 ,update_time = now()
 ,update_by = '{curUserId}'
 where category_guid = '{categoryGuid}'
@@ -23,8 +24,8 @@ set t.plate_field_guid=t1.guid
   , t.temp_guid=null
   , t.del_flag='0'
   , t.publish_flag='2'
-,update_time = now()
-,update_by = '{curUserId}'
+,t.update_time = now()
+,t.update_by = '{curUserId}'
 where (t.temp_guid is not null and t.temp_guid <> '')
   and t.del_flag = '2'
   and t.biz_type = '1'
@@ -40,8 +41,8 @@ set t.plate_guid=t1.guid
   , t.del_flag='0'
   , t.publish_flag='2'
   , t.publish_time=now()
-,update_time = now()
-,update_by = '{curUserId}'
+,t.update_time = now()
+,t.update_by = '{curUserId}'
 where (t.temp_guid is not null and t.temp_guid <> '')
   and t.del_flag = '2'
   and t.biz_type = '1'
