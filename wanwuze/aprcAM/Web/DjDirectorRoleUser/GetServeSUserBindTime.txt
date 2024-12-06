@@ -1,0 +1,10 @@
+-- 如果登录用户是服务主管,需要对数据做过滤,只查询服务主管与被关联用户的之后的订单
+set @serveDirectorFlag=0,@bindTime=null;
+
+-- 在服务主管与服务专员的绑定表中存在表明用户是服务主管
+select if(exists(select 1 from coz_server3_sys_user_bind
+where  binded_suser_guid = '{curUserId}' and del_flag = '0') ,1,0) into @serveDirectorFlag ;
+
+-- 取得服务主管与服务专员绑定的时间
+select create_time into @bindTime from coz_server3_sys_user_bind
+where binded_suser_guid = '{curUserId}' and bind_suser_guid = '{targetUserId}' and del_flag = '0';
