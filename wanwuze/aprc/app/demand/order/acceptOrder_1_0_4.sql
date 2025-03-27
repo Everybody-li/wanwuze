@@ -55,7 +55,7 @@ where (guid = '{orderGuid}' or parent_guid = '{orderGuid}' or guid = @parent_gui
 ;
 insert into coz_order_fee_settle(guid, order_guid, type, fee, del_flag, create_by, create_time, update_by, update_time)
 select uuid()
-     , '{orderGuid}'
+     , guid
      , '1'
      , supply_fee
      , '0'

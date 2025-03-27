@@ -19,3 +19,4 @@ coz_demand_request_plate t
 where
 t.request_guid='{requestGuid}' and t.del_flag='0'
 group by t.status,t.plate_norder,t.plate_formal_alias,t.plate_formal_guid
+order by t.plate_norder,t.plate_formal_guid

@@ -31,3 +31,4 @@ where
 t.request_guid='{requestGuid}' and t.del_flag='0'
 group by t.plate_field_norder,t.plate_field_formal_alias,t.plate_formal_guid,t.plate_field_formal_guid,t.operation,t1.done_flag,t.plate_field_code
 )t
+order by t.norder

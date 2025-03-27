@@ -16,9 +16,6 @@
 -- 取服务主管相关信息
 -- {file[aprcAM/Web/DjDirectorRoleUser/GetServeSUserBindTime.txt]/file}
 
--- 引入
-{file[aprc/app/demand/dReq/plates/codeCondition_1_0_1.sql]/file}
-
 
 select 
 count(1) as totalNum

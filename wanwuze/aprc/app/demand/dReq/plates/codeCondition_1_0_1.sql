@@ -29,6 +29,6 @@
                        '&selectColumnName=path_name&whereColumnName=code&tableName=sys_city_code_hasnone')
           else concat('code=',
                        t.plate_field_value,
-                       '&selectColumnName=path_name&whereColumnName=code&tableName=sys_city_code_hasnone') end
+                       '&selectColumnName=path_name&whereColumnName=code&tableName=sys_city_code') end
 
 

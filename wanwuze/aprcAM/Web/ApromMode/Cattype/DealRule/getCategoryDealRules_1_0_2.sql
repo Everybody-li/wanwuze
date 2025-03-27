@@ -18,13 +18,12 @@
 -- ##output publishTime string[19] 最新发布时间;最新发布时间（格式：0000年00月00日 00:00）
 -- ##output createTime string[19] 创建时间;创建时间（格式：0000-00-00 00:00:00）
 
-PREPARE q1 FROM '
 	select
 	t.guid as dealRuleGuid
 	,t1.cattype_name as cattypeName
 	,t.category_guid as categoryGuid
 	,t1.name as categoryName
-	,case when(t.publish_flag=''0'') then ''1'' else ''0'' end as publishFlag
+	,case when(t.publish_flag='0') then '1' else '0' end as publishFlag
 	,left(t.publish_time,16) as publishTime
 	,left(t.create_time,19) as createTime
 	from
@@ -32,11 +31,8 @@ PREPARE q1 FROM '
 	left join
 	coz_category_info t1
 	on t.category_guid=t1.guid
-	where 
-	(t1.name like ''%{categoryName}%'' or ''{categoryName}''='''') and t1.mode=''{categoryMode}'' and t.del_flag=''0'' and (t.publish_flag=''0'' or t.publish_flag=''2'') 
+	where  t1.mode='{categoryMode}' and t.del_flag='0'
+	        {dynamic:categoryName[ and t1.name like '%{categoryName}%']/dynamic}
 order by t.id desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+;
+

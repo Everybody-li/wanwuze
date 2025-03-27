@@ -53,7 +53,7 @@ and t3.serve_fee_flag='0'
     and left(t2.accept_time,7)='{operationMonth}'
 and(('{zjType}'='1' and t3.cattype_guid='43cabc5d-f1ce-11ec-bace-0242ac120003') or ('{zjType}'='0' and t3.cattype_guid<>'43cabc5d-f1ce-11ec-bace-0242ac120003'))
 and (('{targetUserType}'='' and '{targetUserId}'='') or ('{targetUserType}'='1' and t1.demand_sys_user_guid='{targetUserId}') or ('{targetUserType}'='2' and t1.supply_sys_user_guid='{targetUserId}') or ('{targetUserType}'='3' and t1.category_guid='{targetUserId}'))
-and (@serveDirectorFlag = 0 or (@serveDirectorFlag = 1 and t3.accept_time >= @bindTime))
+and (@serveDirectorFlag = 0 or (@serveDirectorFlag = 1 and t2.accept_time >= @bindTime))
 order by t1.id desc
 Limit {compute:[({page}-1)*{size}]/compute},{size};
 
