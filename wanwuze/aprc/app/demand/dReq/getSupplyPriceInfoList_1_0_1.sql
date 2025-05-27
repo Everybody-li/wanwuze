@@ -34,11 +34,12 @@ t.guid as requestPriceGuid
 ,t.distance
 ,ifnull((select a.plate_field_value from coz_demand_request_price_plate a left join coz_model_plate_field_formal b on a.plate_field_formal_guid=b.guid left join coz_model_fixed_data c on b.name=c.code where c.code='f00052' and a.del_flag='0' and a.status='1' and a.request_price_guid=t.guid limit 1),'') as brandName
 ,cast(t.supply_price/100 as decimal(18,2)) as supplyPrice
-,cast((t.supply_service_fee+t.demand_service_fee)/100 as decimal(18,2)) as serviceFee
+# ,cast((t.supply_service_fee+t.demand_service_fee)/100 as decimal(18,2)) as serviceFee
+,cast((t.supply_service_fee+t.demand_service_fee)  as decimal(18,2)) as serviceFee
 ,cast(t.tax_fee/100 as decimal(18,2)) as importTaxFee
 ,cast(t.logistics_fee/100 as decimal(18,2)) as logisticsFee
 ,cast(t.logistics_insurance_fee/100 as decimal(18,2)) as logisticsInsuranceFee
-,t.total_fee
+,t.total_fee  as total_fee
 from  
 coz_demand_request_price t
 left join

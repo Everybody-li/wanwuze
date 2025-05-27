@@ -19,6 +19,7 @@ select left(publish_time,10) as ReleaseDate,size as apkSize,remark as `Explain`,
 from
 coz_app_version
 where
+#     1=2 and -- 临时更改,不查新版本,去掉app显示提示更新版本
 status='1'
 order by publish_time desc
 limit 1
