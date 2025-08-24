@@ -8,15 +8,18 @@
 -- ##input modelGuid char[36] NOTNULL;型号名称guid，必填
 
 
-select 
-t.category_guid as categoryGuid
-,t.target_object as targetObject
-,t.charge_type as chargeType
-,t.charge_value * 100 as chargeValue
-,left(t.start_date,10) as startDate
-,left(t.end_date,10) as endDate
+select
+    t.category_guid                                                           as categoryGuid
+  , t.target_object                                                           as targetObject
+  , t.charge_type                                                             as chargeType
+    -- 按比例除以100，按金额乘以100
+  , if(charge_type = 1, round(t.charge_value / 100, 2), t.charge_value * 100) as chargeValue
+  , left(t.start_date, 10)                                                    as startDate
+  , left(t.end_date, 10)                                                      as endDate
 from
-coz_category_service_fee_mn t
+    coz_category_service_fee_mn t
 where
-model_guid='{modelGuid}' and (sysdate() between start_date and end_date) and del_flag='0'
+      model_guid = '{modelGuid}'
+  and (sysdate() between start_date and end_date)
+  and del_flag = '0'
 order by id desc

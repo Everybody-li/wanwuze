@@ -7,7 +7,7 @@
 
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
 -- ##input guid char[36] NOTNULL;节点guid，必填
--- ##input name string[20] NOTNULL;需求场景名称，必填
+-- ##input name string[100] NOTNULL;需求场景名称，必填
 
 set @parent_guid=(select parent_guid from coz_category_scene_tree where guid='{guid}')
 ;

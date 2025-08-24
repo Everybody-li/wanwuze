@@ -37,31 +37,14 @@ select t.guid                                         as orderGuid
      , t1.alias                                       as categoryAlias
      , t.order_no                                     as orderNo
      , left(t.create_time, 10)                        as orderTime
-     , CAST((t.supply_fee / 100) AS decimal(18, 2))   as orderFee
+     , CAST((t.pay_fee / 100) AS decimal(18, 2))      as orderFee
+     , case t2.cattype_guid
+           when '43cabc5d-f1ce-11ec-bace-0242ac120003' then '0.00'
+           else CAST((t.pay_fee / 100) AS decimal(18, 2)) end as supplyFee
      , case t2.cattype_guid
            when '43cabc5d-f1ce-11ec-bace-0242ac120003'
                then '0.00'
-           else (select if(plate_field_code in ('f00051','f00062'), cast(plate_field_value / 100 as decimal(18, 2)),
-                           plate_field_value)
-                 from coz_demand_request_price_plate
-                 where request_price_guid = t3.guid
-                   and del_flag = '0'
-                   and plate_field_code in ('f00051','f00062')
-                 order by create_time desc
-                 limit 1) end                         as supplyFee
-     , case t2.cattype_guid
-           when '43cabc5d-f1ce-11ec-bace-0242ac120003'
-               then '0.00'
-           else (select if(plate_field_code in ('f00051','f00062'),
-                           concat(cast(plate_field_value / 100 as decimal(18, 2)),
-                                  ifnull(plate_field_value_remark, '')),
-                           plate_field_value)
-                 from coz_demand_request_price_plate
-                 where request_price_guid = t3.guid
-                   and del_flag = '0'
-                   and plate_field_code in ('f00051','f00062')
-                 order by create_time desc
-                 limit 1) end                         as supplyFeeWithUpCase
+           else CAST((t.supply_fee / 100) AS decimal(18, 2)) * t.quantity end as supplyFeeWithUpCase
      , CAST((t.discount_fee / 100) AS decimal(18, 2)) as discountFee
      , t.invoice_type                                 as invoiceType
      , t.invoice_title                                as invoiceTitle

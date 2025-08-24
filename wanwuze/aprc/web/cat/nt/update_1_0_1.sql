@@ -8,7 +8,7 @@
 -- ##input guid char[36] NOTNULL;字节内容guid，必填
 -- ##input screenGuid char[36] NOTNULL;末级场景guid，必填
 -- ##input parentGuid char[36] NOTNULL;上一段字节内容guid（前端判断，没有上一段字节内容,传末级场景guid），必填
--- ##input name string[50] NOTNULL;本段字节标题的字节内容
+-- ##input name string[100] NOTNULL;本段字节标题的字节内容
 
 set @all_parent_id=(select CONCAT(all_parent_id,id,',') from coz_category_name_tree where guid='{parentGuid}' and del_flag=0)
 ;

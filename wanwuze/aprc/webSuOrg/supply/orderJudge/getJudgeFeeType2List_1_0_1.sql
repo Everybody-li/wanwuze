@@ -20,7 +20,6 @@
 -- ##output appReadFlag string[1] 1;阅读标志（1：未读，2：已读）
 -- ##output judgeFeeGuid char[36] 违约费用guid;违约费用guid
 
-PREPARE q1 FROM '
 select 
 t.order_guid as orderGuid
 ,t4.guid as categoryGuid
@@ -32,7 +31,8 @@ t.order_guid as orderGuid
 ,t1.pay_status as judgeFeePayStatus
 ,t1.app_read_flag as appReadFlag
 ,t1.guid as judgeFeeGuid
-from 
+,t.guid as judgeGuid
+from
 coz_order_judge_fee t1
 left join 
 coz_order_judge t
@@ -44,10 +44,6 @@ left join
 coz_category_info t4
 on t3.category_guid=t4.guid 
 where 
-t.obey_user_id=''{curUserId}'' and (t3.sd_path_guid=''{sdPathGuid}'') and t1.fee_type=''2'' and t.disobey_object=''1''
+t.obey_user_id='{curUserId}' and (t3.sd_path_guid='{sdPathGuid}') and t1.fee_type='2' and t.disobey_object='1'
 order by t.create_time desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size};

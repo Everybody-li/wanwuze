@@ -26,4 +26,4 @@ coz_demand_request_price t2
 on t2.request_supply_guid=t1.guid
 where 
 t.parent_guid='{requestGuid}' and t.del_flag='0'
-order by t.create_time desc
+order by t.id desc

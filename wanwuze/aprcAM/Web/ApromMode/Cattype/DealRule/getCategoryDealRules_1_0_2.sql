@@ -14,7 +14,7 @@
 -- ##output categoryGuid string[50] 品类guid;品类guid
 -- ##output categoryName string[50] 品类名称;品类名称
 -- ##output cattypeName string[50] 品类类型名称;品类类型名称
--- ##output publishFlag int[>=0] 1;发布按钮高亮标志（0：置灰，1：高亮）
+-- ##output publishFlag int[>=0] 1;发布按钮高亮标志（2：置灰，其他：高亮）
 -- ##output publishTime string[19] 最新发布时间;最新发布时间（格式：0000年00月00日 00:00）
 -- ##output createTime string[19] 创建时间;创建时间（格式：0000-00-00 00:00:00）
 
@@ -23,7 +23,7 @@
 	,t1.cattype_name as cattypeName
 	,t.category_guid as categoryGuid
 	,t1.name as categoryName
-	,case when(t.publish_flag='0') then '1' else '0' end as publishFlag
+	,publish_flag as publishFlag
 	,left(t.publish_time,16) as publishTime
 	,left(t.create_time,19) as createTime
 	from
@@ -34,5 +34,6 @@
 	where  t1.mode='{categoryMode}' and t.del_flag='0'
 	        {dynamic:categoryName[ and t1.name like '%{categoryName}%']/dynamic}
 order by t.id desc
+Limit {compute:[({page}-1)*{size}]/compute},{size};
 ;
 

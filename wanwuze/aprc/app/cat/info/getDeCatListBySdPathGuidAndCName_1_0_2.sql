@@ -1,4 +1,4 @@
-﻿-- ##Title app-采购-根据品类名称模糊查询品类列表_1_0_1
+﻿-- ##Title app-采购-根据品类名称模糊查询品类列表_1_0_2
 -- ##Author 卢文彪
 -- ##CreateTime 2020-06-05
 -- ##Describe app-采购-根据品类名称模糊查询品类列表_1_0_1
@@ -6,7 +6,7 @@
 
 -- ##input sdPathGuid string[36] NOTNULL;采购供应路径关联guid，必填
 -- ##input cattypeGuid char[36] NOTNULL;品类类型guid，必填
--- ##input categoryName string[200] NULL;品类名称(模糊搜索)，非必填
+-- ##input categoryName string[200] NULL;品类名称或别名(模糊搜索)，非必填
 -- ##input size int[>=0] NOTNULL;每页多少行数据（默认20），必填
 -- ##input page int[>=0] NOTNULL;第几页（默认1），必填
 -- ##input curUserId string[36] NOTNULL;用户id(登录用户id)，必填
@@ -84,7 +84,7 @@ on t3.demand_path_guid=t4.guid
 left join
 coz_cattype_supply_path t5
 on t3.supply_path_guid=t5.guid
-where t2.sd_path_guid='{sdPathGuid}' and t.del_flag='0' {dynamic:categoryName[and t.name like @newCategoryName ]/dynamic}
+where t2.sd_path_guid='{sdPathGuid}' and t.del_flag='0' {dynamic:categoryName[and (t.name like @newCategoryName or t.alias like '%{categoryName}%') ]/dynamic}
 )t
 )t
 group by categoryGuid,categoryName,alias,img,categoryMode,buttonStatus,buttonStatusName,sdFlag,priceMode,sdPathGuid

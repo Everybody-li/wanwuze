@@ -25,35 +25,35 @@
 -- ##output confirmPayFlag string[1] 1;缴纳费用确认(1：未结算，2：已结算)
 
 
-select 
-t4.guid as categoryGuid
-,t4.img as categoryImg
-,t4.name as categoryName
-,t4.alias as categoryAlias
-,t3.order_no as orderNo
-,t.order_guid as orderGuid
-,left(t3.create_time,10) as orderTime
-,cast(t.disobey_fee/100 as decimal(18,2)) as judgeFee
-,t.guid as judgeGuid
-,t1.guid as judgeFeeGuid
-,t1.pay_status as judgeFeePayType
-,case when(t1.pay_prove='') then '0' else '1' end as judgeFeeProveType
-,t1.pay_prove as judgeFeePayProve
-,left(t1.pay_time,10) as judgeFeePayTime
-,t1.biz_rule_guid as bizRuleGuid
-,t1.biz_rule_name as bizRuleName
-,t1.confirm_pay_flag as confirmPayFlag
-from 
-coz_order_judge_fee t1
-left join 
-coz_order_judge t
-on t1.judge_guid=t.guid 
-left join 
-coz_order t3 
-on t.order_guid=t3.guid 
-left join 
-coz_category_info t4
-on t3.category_guid=t4.guid 
-where 
-t1.guid='{judgeFeeGuid}'
+select
+    t4.guid                                             as categoryGuid
+  , t4.img                                              as categoryImg
+  , t4.name                                             as categoryName
+  , t4.alias                                            as categoryAlias
+  , t3.order_no                                         as orderNo
+  , t.order_guid                                        as orderGuid
+  , left(t3.create_time, 10)                            as orderTime
+  , cast(t.disobey_fee / 100 as decimal(18, 2))         as judgeFee
+  , t.guid                                              as judgeGuid
+  , t1.guid                                             as judgeFeeGuid
+  , if(t1.pay_status in (0,1,3),0,t1.pay_status)        as judgeFeePayType
+  , case when (t1.pay_prove = '') then '0' else '1' end as judgeFeeProveType
+  , t1.pay_prove                                        as judgeFeePayProve
+  , left(t1.pay_time, 10)                               as judgeFeePayTime
+  , t1.biz_rule_guid                                    as bizRuleGuid
+  , t1.biz_rule_name                                    as bizRuleName
+  , t1.confirm_pay_flag                                 as confirmPayFlag
+from
+    coz_order_judge_fee   t1
+    left join
+        coz_order_judge   t
+            on t1.judge_guid = t.guid
+    left join
+        coz_order         t3
+            on t.order_guid = t3.guid
+    left join
+        coz_category_info t4
+            on t3.category_guid = t4.guid
+where
+    t1.guid = '{judgeFeeGuid}'
 

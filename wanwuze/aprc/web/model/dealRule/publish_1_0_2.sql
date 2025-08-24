@@ -10,17 +10,13 @@
 -- ##output publishNum int[>=0] 10;发布次数（0：未发布过，这是第一次发布，>0：非第一次发布）
 
 
-
-select count(1) from 
-coz_category_deal_rule_log t
-where 
-guid='{dealRuleGuid}'
-;
 set @categoryGuid='',@cattypeGuid='',@priceMode='',@serveFeeFlag='',@cloneFalg='';
-select category_guid,cattype_guid,price_mode,serve_fee_flag,case when(category_guid=cattype_guid) then clone_falg else '0' end into @categoryGuid,@cattypeGuid,@priceMode,@serveFeeFlag,@cloneFalg
+select category_guid,cattype_guid,price_mode,serve_fee_flag,
+       case when(category_guid=cattype_guid) then clone_falg else '0' end
+into @categoryGuid,@cattypeGuid,@priceMode,@serveFeeFlag,@cloneFalg
 from coz_category_deal_rule where del_flag='0' and guid='{dealRuleGuid}'
 ;
-set @flag1=(select case when ( (select price_mode from coz_category_deal_rule_log where deal_rule_guid='{dealRuleGuid}' and del_flag='0' order by id desc limit 1)=CAST(@priceMode AS char CHARACTER SET utf8)) then '0' else '1' end)
+set @flag1=(select case when ( (select price_mode from coz_category_deal_rule_log where deal_rule_guid='{dealRuleGuid}' and del_flag='0' order by id desc limit 1)=@priceMode) then '0' else '1' end)
 ;
 update coz_category_supplier
 set price_mode=@priceMode
@@ -31,20 +27,15 @@ set price_mode=@priceMode
 ,user_price_mode=@priceMode
 ,update_time = now()
 ,update_by = '{curUserId}'
-where category_guid=CAST(@categoryGuid AS char CHARACTER SET utf8) and @flag1='1'
+where category_guid=@categoryGuid and @flag1='1'
 ;
 update coz_category_deal_rule t
 set publish_flag=2
 ,publish_time=now()
-,price_mode=@priceMode
-,serve_fee_flag=@serveFeeFlag
 ,update_time = now()
 ,update_by = '{curUserId}'
-where guid='{dealRuleGuid}' or
-(
-not exists(select 1 from coz_category_deal_rule_log where category_guid=t.category_guid) and
-cattype_guid=CAST(@categoryGuid AS char CHARACTER SET utf8) and CAST(@cloneFalg AS char CHARACTER SET utf8)='1'
-)
+where guid='{dealRuleGuid}'
+--   or ( not exists(select 1 from coz_category_deal_rule_log where category_guid=t.category_guid) and cattype_guid=@categoryGuid and @cloneFalg='1')
 ;
 insert into coz_category_deal_rule_log (guid,deal_rule_guid,category_guid,price_mode,serve_fee_flag,publish_time,create_by,create_time,update_by,update_time)
 select
@@ -63,12 +54,14 @@ coz_category_deal_rule t
 where guid='{dealRuleGuid}' or 
 (
 not exists(select 1 from coz_category_deal_rule_log where category_guid=t.category_guid) and
-cattype_guid=CAST(@categoryGuid AS char CHARACTER SET utf8) and CAST(@cloneFalg AS char CHARACTER SET utf8)='1'
+cattype_guid=@categoryGuid and @cloneFalg='1'
 )
 ;
 update coz_category_service_fee
 set del_flag='2'
 ,update_by='{curUserId}'
 ,update_time=now()
-where category_guid=CAST(@categoryGuid AS char CHARACTER SET utf8) and @categoryGuid<>@cattypeGuid and @serveFeeFlag='1'
+where category_guid=@categoryGuid and @categoryGuid<>@cattypeGuid and @serveFeeFlag='1'
 ;
+
+select count(1) from coz_category_deal_rule_log;

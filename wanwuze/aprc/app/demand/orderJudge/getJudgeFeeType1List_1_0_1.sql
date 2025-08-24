@@ -17,8 +17,7 @@
 -- ##output judgeFeeGuid char[36] 违约费用guid;违约费用guid
 -- ##output judgeFeeNo string[10] 账单编号;账单编号（费用编号）
 
-PREPARE q1 FROM '
-select 
+select
 cast(t.disobey_fee/100 as decimal(18,2)) as judgeFee
 ,t.order_guid as orderGuid
 ,left(t.create_time,10) as judgeTime
@@ -26,7 +25,10 @@ cast(t.disobey_fee/100 as decimal(18,2)) as judgeFee
 ,t.guid as judgeGuid
 ,t1.guid as judgeFeeGuid
 ,t1.fee_no as judgeFeeNo
-from 
+,t4.category_name as categoryName
+,t4.category_img as categoryImg
+,t4.category_alias as categoryAlias
+from
 coz_order_judge t
 left join 
 coz_order_judge_fee t1
@@ -35,13 +37,9 @@ left join
 coz_order t3 
 on t.order_guid=t3.guid 
 left join 
-coz_category_info t4
-on t3.category_guid=t4.guid 
+coz_demand_request t4
+on t3.request_guid=t4.guid
 where 
-t.disobey_user_id=''{curUserId}'' and (t3.sd_path_guid=''{sdPathGuid}'') and t1.fee_type=''1'' and t.disobey_object=''1'' and t3.parent_guid=''''
+t.disobey_user_id='{curUserId}' and (t3.sd_path_guid='{sdPathGuid}') and t1.fee_type='1' and t.disobey_object='1' and t3.parent_guid=''
 order by t.create_time desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size};

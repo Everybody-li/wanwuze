@@ -1,7 +1,7 @@
-﻿-- ##Title app-采购/供应-查看裁决结果信息
+﻿-- ##Title web机构端-供应-查看裁决结果信息
 -- ##Author 卢文彪
 -- ##CreateTime 2020-06-05
--- ##Describe app-采购/供应-查看裁决结果信息
+-- ##Describe 供应-查看裁决结果信息
 -- ##CallType[QueryData]
 
 -- ##input orderGuid char[36] NULL;订单guid，必填

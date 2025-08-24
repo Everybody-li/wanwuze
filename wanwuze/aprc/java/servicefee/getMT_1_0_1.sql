@@ -12,8 +12,9 @@ select
 t.category_guid as categoryGuid
 ,t.target_object as targetObject
 ,t.charge_type as chargeType
-,t.mcharge_value * 100 as mchargeValue
-,t.nomcharge_value * 100 as nomchargeValue
+-- 按比例除以100，按金额乘以100
+,if(charge_type = 1, round(t.mcharge_value / 100, 2), t.mcharge_value * 100) as mchargeValue
+,if(charge_type = 1, round(t.nomcharge_value / 100, 2), t.nomcharge_value * 100) as nomchargeValue
 ,case when exists(select 1 from coz_category_supplier_model_price a left join coz_category_supplier_model b on a.model_guid=b.guid left join coz_category_supplier c on b.supplier_guid=c.guid where a.del_flag='0' and b.del_flag='0' and c.category_guid='{categoryGuid}') then '1' else '0' end as hasModelPriceFlag
 from
 coz_category_service_fee_mt t

@@ -18,7 +18,6 @@
 -- ##output orderTime string[10] 订单创建日期;订单创建日期（格式：0000-00-00）
 -- ##output orderStatus string[10] 最新订单状态;最新订单状态（1：需方取消订单--需方操作，2：供方取消订单--供方操作，3：订单交易仲裁--系统操作，4：供方处理完成--供方操作，5：需方验收通过--需方操作，6：需方退货申请--需方操作，7：需方退货完成--需方操作，8：供方验收不通过--供方操作，9：供方验收通过---供方操作）
 
-PREPARE q1 FROM '
 select 
 t.guid as orderGuid
 ,t.category_guid as categoryGuid
@@ -34,10 +33,6 @@ inner join
 coz_category_info t1
 on t.category_guid=t1.guid 
 where 
-t.demand_user_id=''{curUserId}'' and t.del_flag=''0'' and t.pay_status=''2'' and t.parent_guid='''' and t.sd_path_guid=''{sdPathGuid}''
+t.demand_user_id='{curUserId}' and t.del_flag='0' and t.pay_status='2' and t.parent_guid='' and t.sd_path_guid='{sdPathGuid}'
 order by t.create_time desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size};

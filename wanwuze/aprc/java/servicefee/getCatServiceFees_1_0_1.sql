@@ -12,11 +12,11 @@
 select 
 t.category_guid as categoryGuid
 ,t.charge_type as chargeType
-,t.charge_value as chargeValue
+,round(t.charge_value / 100 ,2) as chargeValue
 ,t.target_object as targetObject
 ,t.create_time as createTimeStr
 from
 coz_category_service_fee_log t
-where
-category_guid='{categoryGuid}'and del_flag='0'
+# where
+# category_guid='{categoryGuid}'and del_flag='0'
 order by id desc

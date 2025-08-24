@@ -12,7 +12,7 @@ select
 t.*
 ,t1.guid as logisRequestPriceGuid
 ,t1.request_supply_guid as logisRequestSupplyGuid
-,case when (t1.supply_price>0) then cast(t1.supply_price/100 as decimal(18,2)) else cast(t.logisRequestSupplyPriceGuid1/100 as decimal(18,2)) end as logisticsFee
+,case when (t1.supply_price>0) then cast(t1.supply_price/100 as decimal(18,2)) else cast(t1.logistics_fee/100 as decimal(18,2)) end as logisticsFee
 from
 (
 select 

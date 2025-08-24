@@ -8,7 +8,7 @@
 -- ##input parentGuid string[36] NOTNULL;父级字节内容guid，非必填
 -- ##input sdPathGuid string[36] NOTNULL;采购供应路径关联guid，必填
 -- ##input curUserId string[36] NOTNULL;登录用户id，必填
--- ##input name string[20] NOTNULL;采购/供应场景名称，必填
+-- ##input name string[100] NOTNULL;采购/供应场景名称，必填
 
 INSERT INTO coz_category_scene_tree(guid,parent_guid,all_parent_id,sd_path_guid,name,norder,del_flag,create_by,create_time,update_by,update_time,level)
 select 
