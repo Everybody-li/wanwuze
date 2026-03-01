@@ -28,7 +28,7 @@
                        round(t.plate_field_value/100,2),
                        '&selectColumnName=path_name&whereColumnName=code&tableName=sys_city_code_hasnone')
           else concat('code=',
-                       t.plate_field_value,
+                       url_encode(t.plate_field_value),
                        '&selectColumnName=path_name&whereColumnName=code&tableName=sys_city_code') end
 
 

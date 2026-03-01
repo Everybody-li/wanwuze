@@ -41,7 +41,8 @@ on t3.user_id=t2.user_id
 inner join
 coz_lgcode_fixed_data t4
 on t3.lgcode_guid=t4.guid
-where t1.del_flag='0' and t2.del_flag='0' and (t2.name like '%坦能高美%' or '坦能高美'='')
+where t1.del_flag='0' and t2.del_flag='0'
+    {dynamic:orgName[and t2.name like '%{orgName}%']/dynamic}
 )t
 group by orgUserId,orgID,createTime,orgName,phonenumber,supplySystem
 order by createTime desc

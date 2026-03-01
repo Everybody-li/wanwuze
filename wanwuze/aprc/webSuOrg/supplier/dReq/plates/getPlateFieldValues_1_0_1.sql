@@ -6,16 +6,31 @@
 
 -- ##CustomFormatterColumns[{column:[value]/column}{url:[http://127.0.0.1:8011/html?SqlCmdName=aprc\app\demand\dReq\plates\codeToPathName_1_0_1&DBC=w_a&{Value}]/url}];
 
+select
+    t.`value`
+  , t.requestPlateGuid
+  , t.fieldGuid
+  , if(t.operation in ('4', '5'), t.`plate_field_value`, '') as plateFieldValueRemark
+from
+    (
+        select
+            {file[aprc/app/demand/dReq/plates/codeCondition_1_0_1.sql]/file} as value
+          , t.guid                                                            as requestPlateGuid
+          , t.plate_field_formal_guid                                         as fieldGuid
+          , t.operation
+          , t.plate_field_value
+        from
+            coz_demand_request_plate t
+            left join
+                coz_demand_request   t1
+                    on t.request_guid = t1.guid
+            left join
+                sys_city_code        t2
+                    on t2.code = t.plate_field_value
+        where
+              t.request_guid = '{requestGuid}'
+          and t.del_flag = '0'
+    ) t
+;
 
-select {file[aprc/app/demand/dReq/plates/codeCondition_1_0_1.sql]/file} as value
-     , t.guid                                                  as requestPlateGuid
-     , t.plate_field_formal_guid                               as fieldGuid
-from coz_demand_request_plate t
-         left join
-     coz_demand_request t1
-     on t.request_guid = t1.guid
-         left join
-     sys_city_code t2
-     on t2.code = t.plate_field_value
-where t.request_guid = '{requestGuid}'
-  and t.del_flag = '0';
+

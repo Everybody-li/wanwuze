@@ -5,7 +5,7 @@
 -- ##CallType[ExSql]
 
 -- ##input supplierGuid char[36] NOTNULL;供方品类表guid（app自己生成uuid），必填
--- ##input modelName string[50] NOTNULL;型号名称，必填
+-- ##input modelName string[200] NOTNULL;型号名称，必填
 -- ##input modelGuid char[36] NOTNULL;型号guid，必填
 
 insert into coz_category_supplier_model(guid,supplier_guid,name,del_flag,create_by,create_time,update_by,update_time)

@@ -15,7 +15,6 @@
 -- ##output updateTime string[19] 创建时间;创建时间（每个品类取未删除的最近时间）
 -- ##output cattypeName string[50] 品类类型名称;品类类型名称
 
-PREPARE q1 FROM '
 select
 t1.guid as categoryGuid
 ,t1.name as categoryName
@@ -29,10 +28,9 @@ inner join
 coz_category_info t1
 on t.category_guid=t1.guid
 where 
-(t1.name like''%{category_name}%'' or ''{category_name}''='''') and t.del_flag=''0'' and t1.del_flag=''0'' and t.day>0
+   t.day>0
+    {dynamic:category_name[ and t1.name like '%{category_name}%' ]/dynamic}
+  and t.del_flag='0'
+  and t1.del_flag='0'
 order by t.create_time desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size}

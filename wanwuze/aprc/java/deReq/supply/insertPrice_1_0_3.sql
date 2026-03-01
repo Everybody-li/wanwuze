@@ -10,9 +10,9 @@
 -- ##input requestSupplyGuid char[36] NOTNULL;需求供方guid，必填
 -- ##input userId char[36] NOTNULL;供方用户guid，必填
 -- ##input modelGuid string[36] NULL;型号guid，必填
--- ##input modelName string[50] NULL;型号名称，必填
+-- ##input modelName string[200] NULL;型号名称，必填
 -- ##input bankUserName string[40] NOTNULL;开户账户名称，必填
--- ##input bankUserNo string[20] NOTNULL;开户银行账号，必填
+-- ##input bankUserNo string[20] NOTNULL;开户银行账号，必填1
 -- ##input bankAddr string[100] NOTNULL;开户银行地址，必填
 -- ##input bankName string[40] NOTNULL;开户银行，必填 
 -- ##input supplyCompanyName string[50] NOTNULL;供应主体，必填

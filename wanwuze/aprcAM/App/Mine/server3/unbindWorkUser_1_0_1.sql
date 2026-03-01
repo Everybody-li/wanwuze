@@ -13,41 +13,42 @@
 -- ##output okFlag enum[0,1] 1;操作结果是否成功:0-否,1-是
 -- ##output msg string[300] 工作编号不存在或您已与该工作人员绑定;提示语
 
-set @Flag1=(select case when exists(select 1 from coz_server3_sys_user_dj_bind where binded_user_id='{curUserId}' and user_guid=(select user_guid from sys_user_extra where ex_value='{workNo}')) then '1' else '0' end)
-;
-set @Flag2=(select case when exists(select 1 from sys_user_extra where ex_value='{workNo}' and ex_key='1') then '1' else '0' end)
-;
-set @bindguid=uuid()
-;
-insert into coz_server3_sys_user_dj_bind_log
-(
-guid
-,bind_guid
-,user_guid
-,user_type
-,bind_type
-,binded_user_id
-,create_time
-,create_by
-,del_flag
-)
-select
-uuid()
-,guid
-,t.user_guid
-,'1'
-,'2'
-,'{curUserId}'
-,now()
-,'{curUserId}'
-,'0'
-from
-coz_server3_sys_user_dj_bind t
-where binded_user_id='{curUserId}' and user_guid=(select user_guid from sys_user_extra where ex_value='{workNo}') and @Flag1='1' and @Flag2='1'
-limit 1
-;
-delete from coz_server3_sys_user_dj_bind where binded_user_id='{curUserId}' and user_guid=(select user_guid from sys_user_extra where ex_value='{workNo}' limit 1) and @Flag1='1' and @Flag2='1'
-;
-select 
-case when (@Flag1='1' and @Flag2='1') then '1' else '0' end as okFlag
-,case when (@Flag1='1' and @Flag2='1') then '' else '工作编号不存在或您已与该工作人员绑定' end as msg
+-- 应林总于2025-10-19要求，接口不处理解绑逻辑，不允许用户解绑
+-- set @Flag1=(select case when exists(select 1 from coz_server3_sys_user_dj_bind where binded_user_id='{curUserId}' and user_guid=(select user_guid from sys_user_extra where ex_value='{workNo}')) then '1' else '0' end)
+-- ;
+-- set @Flag2=(select case when exists(select 1 from sys_user_extra where ex_value='{workNo}' and ex_key='1') then '1' else '0' end)
+-- ;
+-- set @bindguid=uuid()
+-- ;
+-- insert into coz_server3_sys_user_dj_bind_log
+-- (
+-- guid
+-- ,bind_guid
+-- ,user_guid
+-- ,user_type
+-- ,bind_type
+-- ,binded_user_id
+-- ,create_time
+-- ,create_by
+-- ,del_flag
+-- )
+-- select
+-- uuid()
+-- ,guid
+-- ,t.user_guid
+-- ,'1'
+-- ,'2'
+-- ,'{curUserId}'
+-- ,now()
+-- ,'{curUserId}'
+-- ,'0'
+-- from
+-- coz_server3_sys_user_dj_bind t
+-- where binded_user_id='{curUserId}' and user_guid=(select user_guid from sys_user_extra where ex_value='{workNo}') and @Flag1='1' and @Flag2='1'
+-- limit 1
+-- ;
+-- delete from coz_server3_sys_user_dj_bind where binded_user_id='{curUserId}' and user_guid=(select user_guid from sys_user_extra where ex_value='{workNo}' limit 1) and @Flag1='1' and @Flag2='1'
+-- ;
+-- select
+-- case when (@Flag1='1' and @Flag2='1') then '1' else '0' end as okFlag
+-- ,case when (@Flag1='1' and @Flag2='1') then '' else '工作编号不存在或您已与该工作人员绑定' end as msg
