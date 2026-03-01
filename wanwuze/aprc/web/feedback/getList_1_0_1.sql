@@ -17,8 +17,9 @@
 -- ##output createTime string[30] 反馈日期;反馈日期（格式：0000-00-00）
 -- ##output replyFlag int[>=0] 1;反馈回复标志（0：未回复，1：已回复）
 -- ##output replyTime string[30] 反馈回复日期;反馈回复日期（格式：0000-00-00）
+-- ##output displayFileName string[30] 文件名称;用于展示(上传时是什么名称就展示什么名称)
+-- ##output downloadFileUrl string[100] 文件相对路径;用于下载文件
 
-PREPARE q1 FROM '
 select 
 t.guid as feedbackGuid
 ,t.content
@@ -26,15 +27,14 @@ t.guid as feedbackGuid
 ,t.reply_flag as replyFlag
 ,left(t.reply_time,10) as replyTime
 ,t.content_read_flag as contentReadFlag
+,t.file_ori_name as displayFileName
+,t.file_guid as downloadFileUrl
 from
 coz_feedback t
 where
 (t.reply_flag={replyFlag} or {replyFlag}=2) and
-t.user_type=''{userType}'' and
-(t.content=''%{content}%'' or ''{content}''='''') and del_flag=''0''
+t.user_type='{userType}' and
+(t.content='%{content}%' or '{content}'='') and del_flag='0'
 order by t.create_time desc
-limit ?,?;
-';
-SET @start =(({page}-1)*{size});
-SET @end =({size});
-EXECUTE q1 USING @start,@end;
+Limit {compute:[({page}-1)*{size}]/compute},{size};
+

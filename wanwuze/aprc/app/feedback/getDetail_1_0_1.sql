@@ -20,6 +20,8 @@
 -- ##output feedbackUserName string[30] 反馈用户姓名;反馈用户姓名
 -- ##output feedbackUserNation string[30] 反馈用户区号;反馈用户区号
 -- ##output feedbackUserPhonenumber string[30] 反馈用户手机号;反馈用户手机号
+-- ##output displayFileName string[30] 文件名称;用于展示(上传时是什么名称就展示什么名称)
+-- ##output downloadFileUrl string[100] 文件相对路径;用于下载文件
 
 update coz_feedback
 set reply_content_read_flag='1'
@@ -37,6 +39,8 @@ t.guid as feedbackGuid
 ,t.reply_flag as replyFlag
 ,t.reply_content as replyContent
 ,t.reply_content_read_flag as replyContentReadFlag
+,t.file_ori_name as displayFileName
+,t.file_guid as downloadFileUrl
 ,t.user_id as feedbackUserId
 ,t1.user_name as feedbackUserName
 ,t1.nation as feedbackUserNation
