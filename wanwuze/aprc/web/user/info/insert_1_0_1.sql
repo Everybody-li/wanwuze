@@ -112,3 +112,15 @@ uuid()
 where 
 '{roleKey}'='duijieRole' and not exists(select 1 from sys_user_extra where user_guid=@userid and ex_key='1' and ex_value=@exValue) and @flag1='1' and @flag2='1'
 ;
+-- 更新服务专员用户id到H5报名记录表
+update
+coz_serve_signin_record
+set
+    update_by='{curUserId}'
+  ,  update_time=now()
+  ,user_id = @userid
+where
+     '{roleKey}' = 'serveRole'
+and phonenumber = '{phonenumber}'
+and user_id = ''
+;
