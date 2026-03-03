@@ -4,11 +4,11 @@
 -- ##Describe app-我要反馈（新增反馈）
 -- ##CallType[ExSql]
 
--- ##input _name string[100] NOTNULL;服务人员姓名
--- ##input _phonenumber char[11] NOTNULL;服务人员手机号
--- ##input _nation string[5] NOTNULL;国家地区区号
--- ##input _sys_city_code string[30] NOTNULL;所在区域code
--- ##input _sys_city_code_guid char[36] NOTNULL;所在区域guid
+-- ##input name string[100] NOTNULL;服务人员姓名
+-- ##input phonenumber char[11] NOTNULL;服务人员手机号
+-- ##input nation string[5] NOTNULL;国家地区区号9
+-- ##input sys_city_code string[30] NOTNULL;所在区域code
+-- ##input sys_city_code_guid char[36] NOTNULL;所在区域guid
 -- ##input serve_directory_user_guid char[36] NOTNULL;服务主用户管guid
 
 insert into coz_serve3_signin_record (guid, name, phonenumber, nation, user_id, sys_city_code,
@@ -17,6 +17,6 @@ insert into coz_serve3_signin_record (guid, name, phonenumber, nation, user_id, 
 select
     uuid(), '{name}', '{phonenumber}', '{nation}', '', '{sys_city_code}', '{serve_directory_user_guid}', '0',
         '{curUserId}', now(), '{curUserId}', now()
-from coz_serve3_signin_record
 where not exists(select 1 from coz_serve3_signin_record where phonenumber = '{phonenumber}')
 ;
+

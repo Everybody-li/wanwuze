@@ -5,7 +5,7 @@
 -- ##CallType[QueryData]
 
 -- ##input phonenumber char[11] NULL;手机号
--- ##input serve_directory_user_guid char[36] NOTNULL;服务主管用户guid
+-- ##input serve_directory_user_guid char[36] NULL;服务主管用户guid
 -- ##input size int[>=0] NOTNULL;每页多少行数据（默认20）
 -- ##input page int[>=0] NOTNULL;第几页（默认1）
 
@@ -26,7 +26,7 @@ from
     inner join
         `apro-rec`.sys_city_code t2 on t1.sys_city_code = t2.code
 where
-    serve_directory_user_guid = '{serve_directory_user_guid}'
-    and user_id <> ''
+     user_id <> ''
+    {dynamic:serve_directory_user_guid[and  serve_directory_user_guid = '{serve_directory_user_guid}']/dynamic}
     {dynamic:phonenumber[and phonenumber like '{phonenumber}']/dynamic}
 Limit {compute:[({page}-1)*{size}]/compute},{size};
