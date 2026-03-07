@@ -28,7 +28,7 @@ t.guid as feedbackGuid
 ,left(t.reply_time,10) as replyTime
 ,t.content_read_flag as contentReadFlag
 ,t.file_ori_name as displayFileName
-,t.file_guid as downloadFileUrl
+,concat('APRC/USER/USE_FEEDBACK/FILES/',left(t.file_guid,1),'/',t.file_guid) as downloadFileUrl
 from
 coz_feedback t
 where

@@ -40,7 +40,7 @@ t.guid as feedbackGuid
 ,t.reply_content as replyContent
 ,t.reply_content_read_flag as replyContentReadFlag
 ,t.file_ori_name as displayFileName
-,t.file_guid as downloadFileUrl
+,concat('APRC/USER/USE_FEEDBACK/FILES/',left(t.file_guid,1),'/',t.file_guid) as downloadFileUrl
 ,t.user_id as feedbackUserId
 ,t1.user_name as feedbackUserName
 ,t1.nation as feedbackUserNation
