@@ -6,8 +6,9 @@
 
 
 
-select 
-code
+select
+guid
+,code
 ,path_name as pathName
 from sys_city_code t
 where t.level=1

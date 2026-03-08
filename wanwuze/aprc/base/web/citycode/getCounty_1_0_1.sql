@@ -8,7 +8,8 @@
 
 
 select
-code
+guid
+,code
 ,path_name as pathName
 from sys_city_code t
 where parent_code='{parentCode}'

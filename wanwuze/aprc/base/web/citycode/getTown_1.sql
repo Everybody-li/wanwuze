@@ -7,7 +7,8 @@
 -- ##input parentCode string[30] NOTNULL;父级code，必填
 
 select
-code
+guid
+,code
 ,path_name as pathName
 from sys_city_code t
 where parent_code='{parentCode}'
