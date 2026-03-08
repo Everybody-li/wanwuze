@@ -5,7 +5,6 @@
 -- ##CallType[QueryData]
 
 
--- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
 select 
 code
