@@ -7,7 +7,8 @@
 -- ##input phonenumber char[11] NULL;手机号
 -- ##input serve_directory_user_guid char[36] NULL;服务主管用户guid
 
--- ##output num in[>=0] 数量;数量
+-- ##output num int[>=0] 1;数量
+
 
 select
     count(1) as num

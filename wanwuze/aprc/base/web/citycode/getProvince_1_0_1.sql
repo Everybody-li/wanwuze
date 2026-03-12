@@ -5,10 +5,10 @@
 -- ##CallType[QueryData]
 
 
--- ##input curUserId string[36] NOTNULL;登录用户id，必填
 
-select 
-code
+select
+guid
+,code
 ,path_name as pathName
 from sys_city_code t
 where t.level=1
