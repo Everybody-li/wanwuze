@@ -13,7 +13,7 @@
 select
     count(1) as num
 from
-    coz_serve_signin_record      t1
+    coz_serve3_signin_record      t1
 where
     user_id = ''
     {dynamic:serve_directory_user_guid[and  serve_directory_user_guid = '{serve_directory_user_guid}']/dynamic}

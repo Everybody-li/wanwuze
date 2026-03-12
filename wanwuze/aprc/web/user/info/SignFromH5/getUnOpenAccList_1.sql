@@ -24,9 +24,9 @@ select
   , t1.create_time
   , t2.path_name
 from
-    coz_serve_signin_record      t1
+    coz_serve3_signin_record      t1
     inner join
-        `apro-rec`.sys_city_code t2 on t1.sys_city_code = t2.code
+        `apro-rec`.sys_city_code t2  on t1.sys_city_code = t2.code
 where
     user_id = ''
     {dynamic:serve_directory_user_guid[and  serve_directory_user_guid = '{serve_directory_user_guid}']/dynamic}
