@@ -29,6 +29,32 @@ from
         `apro-rec`.sys_city_code t2  on t1.sys_city_code = t2.code
 where
     user_id = ''
-    {dynamic:serve_directory_user_guid[and  serve_directory_user_guid = '{serve_directory_user_guid}']/dynamic}
-    {dynamic:phonenumber[and phonenumber like '{phonenumber}']/dynamic}
+   and ('{serve_directory_user_guid}' = 'e294f602-9351-11ed-ad4d-00163e2ca549' or
+     ('e294f602-9351-11ed-ad4d-00163e2ca549' <> '{serve_directory_user_guid}' and serve_directory_user_guid = '{serve_directory_user_guid}')
+         )    {dynamic:phonenumber[and phonenumber like '{phonenumber}']/dynamic}
 Limit {compute:[({page}-1)*{size}]/compute},{size};
+
+
+
+select
+    t1.`name` as username
+  , t1.phonenumber
+  , t1.nation
+  , t1.create_time
+  , t2.path_name,t1.serve_directory_user_guid
+from
+    coz_serve3_signin_record      t1
+    inner join
+        `apro-rec`.sys_city_code t2  on t1.sys_city_code = t2.code
+where
+    user_id = ''
+   and ('23dfe79d-d668-11f0-b8a2-00163e30a13f' = 'e294f602-9351-11ed-ad4d-00163e2ca549' or
+     ('e294f602-9351-11ed-ad4d-00163e2ca549' <> '23dfe79d-d668-11f0-b8a2-00163e30a13f' and serve_directory_user_guid = '23dfe79d-d668-11f0-b8a2-00163e30a13f')
+         )    {dynamic:phonenumber[and phonenumber like '{phonenumber}']/dynamic}
+Limit {compute:[({page}-1)*{size}]/compute},{size};
+
+select
+    *
+from
+    sys_user
+where user_id= 'a7bfaab8-d668-11f0-b8a2-00163e30a13f'

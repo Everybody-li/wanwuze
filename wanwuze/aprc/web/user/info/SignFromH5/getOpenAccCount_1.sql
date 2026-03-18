@@ -16,5 +16,6 @@ from
     coz_serve3_signin_record      t1
 where
     user_id <> ''
-    {dynamic:serve_directory_user_guid[and  serve_directory_user_guid = '{serve_directory_user_guid}']/dynamic}
-    {dynamic:phonenumber[and phonenumber like '{phonenumber}']/dynamic}
+    and ('{serve_directory_user_guid}' = 'e294f602-9351-11ed-ad4d-00163e2ca549' or
+     ('e294f602-9351-11ed-ad4d-00163e2ca549' <> '{serve_directory_user_guid}' and serve_directory_user_guid = '{serve_directory_user_guid}')
+         )  {dynamic:phonenumber[and phonenumber like '{phonenumber}']/dynamic}

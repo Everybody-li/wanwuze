@@ -1,7 +1,7 @@
 ﻿-- ##Title 查询报名已开通账号列表
 -- ##Author lith
 -- ##CreateTime 2026-02-28
--- ##Describe
+-- ##Describe     {dynamic:serve_directory_user_guid[and  serve_directory_user_guid = '{serve_directory_user_guid}']/dynamic}
 -- ##CallType[QueryData]
 
 -- ##input phonenumber char[11] NULL;手机号
@@ -27,6 +27,8 @@ from
         `apro-rec`.sys_city_code t2 on t1.sys_city_code = t2.code
 where
      user_id <> ''
-    {dynamic:serve_directory_user_guid[and  serve_directory_user_guid = '{serve_directory_user_guid}']/dynamic}
+     and ('{serve_directory_user_guid}' = 'e294f602-9351-11ed-ad4d-00163e2ca549' or
+     ('e294f602-9351-11ed-ad4d-00163e2ca549' <> '{serve_directory_user_guid}' and serve_directory_user_guid = '{serve_directory_user_guid}')
+         )
     {dynamic:phonenumber[and phonenumber like '{phonenumber}']/dynamic}
 Limit {compute:[({page}-1)*{size}]/compute},{size};

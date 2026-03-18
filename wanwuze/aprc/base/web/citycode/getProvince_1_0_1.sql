@@ -9,7 +9,8 @@
 select
 guid
 ,code
-,path_name as pathName
+,name as name
+,name as pathName
 from sys_city_code t
 where t.level=1
 order by code

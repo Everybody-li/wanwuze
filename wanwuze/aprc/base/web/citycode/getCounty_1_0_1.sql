@@ -10,7 +10,8 @@
 select
 guid
 ,code
-,path_name as pathName
+,name as name
+,name as pathName
 from sys_city_code t
 where parent_code='{parentCode}'
 order by code
